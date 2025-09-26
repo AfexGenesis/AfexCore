@@ -1,0 +1,58 @@
+{
+  "name": "afexgenesis-laboratory",
+  "version": "2.1.4",
+  "description": "AfexGenesis™ Genetic Laboratory Software",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "genetic",
+    "laboratory",
+    "electron",
+    "webview",
+    "biology",
+    "dna"
+  ],
+  "author": "AfexGenesis™ Laboratory",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^38.1.2",
+    "electron-builder": "^24.0.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^4.1.13"
+  },
+  "build": {
+    "appId": "com.afexgenesis.afexcore",
+    "productName": "AfexCore™",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "css/**/*",
+      "js/**/*",
+      "assets/**/*",
+      "emojis/**/*",
+      "reload.js",
+      "renderer.js"
+    ],
+    "win": {
+    "target": "dir",
+    "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "category": "public.app-category.education",
+      "icon": "emojis/t-rex.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "emojis/t-rex.png"
+    }
+  }
+}

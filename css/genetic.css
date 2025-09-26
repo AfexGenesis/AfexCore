@@ -1,0 +1,3100 @@
+/* ===== DNA TRANSLATOR SPECIFIC STYLES ===== */
+
+/* Enhanced hover effects for genetic tool elements */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Specific color hover effects for new genetic tools */
+.border-red-500\/20:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
+}
+
+.border-purple-500\/20:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+}
+
+.border-yellow-500\/20:hover {
+  border-color: rgba(234, 179, 8, 0.4);
+  box-shadow: 0 10px 30px rgba(234, 179, 8, 0.2);
+}
+
+/* DNA Input textarea styling */
+#dna-input {
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+#dna-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+/* Checkbox styling to match theme */
+input[type="checkbox"] {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked {
+  background: currentColor;
+  border-color: currentColor;
+}
+
+input[type="checkbox"]:focus {
+  ring-color: currentColor;
+  ring-opacity: 0.5;
+}
+
+/* Conversion option cards hover effects */
+.bg-slate-900\/30 {
+  transition: all 0.3s ease;
+}
+
+.bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Translate button enhanced styling */
+.bg-gradient-to-r {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-gradient-to-r::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.bg-gradient-to-r:hover::before {
+  left: 100%;
+}
+
+/* Output section styling */
+#mrna-result,
+#trna-result,
+#protein-result {
+  word-break: break-all;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* Sequence length counter styling */
+#sequence-length {
+  font-family: 'Courier New', monospace;
+  color: rgba(34, 211, 238, 0.8);
+}
+
+/* Clear button styling */
+button:not(.bg-gradient-to-r) {
+  transition: all 0.3s ease;
+}
+
+button:not(.bg-gradient-to-r):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Result containers */
+.bg-slate-900\/50 {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.bg-slate-900\/50:hover {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+/* Empty state styling */
+#empty-output img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#empty-output:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* Animation for result appearance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-appear {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .grid-cols-1.lg\:grid-cols-2 {
+    gap: 1rem;
+  }
+  
+  .max-w-7xl {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+/* Enhanced glass effect for genetic tools */
+.bg-slate-800\/30 {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(71, 85, 105, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.bg-slate-800\/30:hover {
+  background: rgba(30, 41, 59, 0.4);
+  border-color: rgba(71, 85, 105, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Specific border colors for different sections */
+.border-emerald-500\/20:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.border-cyan-500\/20:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+}
+
+.border-blue-500\/20:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.border-purple-500\/20:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.border-slate-500\/20:hover {
+  border-color: rgba(71, 85, 105, 0.4);
+}
+
+/* ===== NEW FEATURES STYLING ===== */
+
+/* File Upload Area */
+.border-dashed {
+  border-style: dashed;
+}
+
+.border-dashed:hover {
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+#file-upload + div {
+  transition: all 0.3s ease;
+}
+
+#file-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Reading Frame Selector */
+.border-yellow-500\/20 {
+  border-color: rgba(234, 179, 8, 0.2);
+}
+
+.border-yellow-500\/20:hover {
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+/* Radio button styling */
+input[type="radio"] {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  transition: all 0.3s ease;
+}
+
+input[type="radio"]:checked {
+  background: rgba(234, 179, 8, 0.8);
+  border-color: rgba(234, 179, 8, 0.8);
+}
+
+input[type="radio"]:focus {
+  ring-color: rgba(234, 179, 8, 0.5);
+  ring-opacity: 0.5;
+}
+
+/* Copy buttons styling */
+#copy-mrna,
+#copy-trna,
+#copy-protein {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+#copy-mrna:hover {
+  background: rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+#copy-trna:hover {
+  background: rgba(168, 85, 247, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+#copy-protein:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+/* Copy button click animation */
+.copy-success {
+  background: rgba(34, 197, 94, 0.4) !important;
+  transform: scale(0.95);
+}
+
+/* Reading frame grid styling */
+.grid-cols-3 label {
+  transition: all 0.3s ease;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+}
+
+.grid-cols-3 label:hover {
+  background: rgba(234, 179, 8, 0.1);
+}
+
+/* File upload drag and drop states */
+.drag-over {
+  border-color: rgba(34, 197, 94, 0.6) !important;
+  background: rgba(34, 197, 94, 0.1) !important;
+}
+
+.drag-over img {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+/* Enhanced responsive design */
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .flex.justify-between {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .flex.justify-between button {
+    align-self: flex-end;
+  }
+}
+
+/* ===== CODON FINDER SPECIFIC STYLES ===== */
+
+/* Protein selection items */
+.protein-item {
+  transition: all 0.3s ease;
+}
+
+.protein-item:hover {
+  background: rgba(15, 23, 42, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.protein-item.selected {
+  background: rgba(168, 85, 247, 0.2) !important;
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.protein-item.selected:hover {
+  background: rgba(168, 85, 247, 0.3) !important;
+}
+
+/* Protein search input */
+#protein-search {
+  transition: all 0.3s ease;
+}
+
+#protein-search:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+/* Codon results styling */
+#codon-results {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#start-stop-codons,
+#all-codons {
+  transition: all 0.3s ease;
+}
+
+#start-stop-codons:hover,
+#all-codons:hover {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+/* Codon highlighting */
+.codon-highlight {
+  background: rgba(34, 197, 94, 0.3);
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+}
+
+.start-codon {
+  background: rgba(34, 197, 94, 0.4);
+  color: #10b981;
+  font-weight: bold;
+}
+
+.stop-codon {
+  background: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Protein list scrollbar */
+#protein-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#protein-list::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 3px;
+}
+
+#protein-list::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 3px;
+}
+
+#protein-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.7);
+}
+
+/* Different border colors for protein items */
+.border-blue-500\/20:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.border-emerald-500\/20:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.border-cyan-500\/20:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+}
+
+.border-yellow-500\/20:hover {
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+.border-red-500\/20:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.border-green-500\/20:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.border-orange-500\/20:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+.border-pink-500\/20:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+}
+
+.border-indigo-500\/20:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.border-teal-500\/20:hover {
+  border-color: rgba(20, 184, 166, 0.4);
+}
+
+.border-lime-500\/20:hover {
+  border-color: rgba(132, 204, 22, 0.4);
+}
+
+.border-sky-500\/20:hover {
+  border-color: rgba(14, 165, 233, 0.4);
+}
+
+.border-violet-500\/20:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.border-rose-500\/20:hover {
+  border-color: rgba(244, 63, 94, 0.4);
+}
+
+.border-amber-500\/20:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.border-fuchsia-500\/20:hover {
+  border-color: rgba(217, 70, 239, 0.4);
+}
+
+.border-zinc-500\/20:hover {
+  border-color: rgba(113, 113, 122, 0.4);
+}
+
+.border-red-600\/20:hover {
+  border-color: rgba(220, 38, 38, 0.4);
+}
+
+/* ===== REVERSE TRANSCRIBER SPECIFIC STYLES ===== */
+
+/* Reverse transcriber input textarea styling */
+#reverse-input {
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* ===== SNP HIGHLIGHTER SPECIFIC STYLES ===== */
+
+/* Editable sequence styling */
+.editable-sequence {
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  padding: 1px 2px;
+}
+
+.editable-sequence[contenteditable="true"] {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px dashed rgba(59, 130, 246, 0.3);
+  cursor: text;
+}
+
+.editable-sequence[contenteditable="true"]:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.editable-sequence[contenteditable="true"]:focus {
+  outline: none;
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* SNP Analysis Results squares */
+#reference-results-content,
+#sample-results-content {
+  transition: all 0.3s ease;
+}
+
+/* Reference sequence specific styling */
+#reference-results-content .editable-sequence[contenteditable="true"] {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Sample sequence specific styling */
+#sample-results-content .editable-sequence[contenteditable="true"] {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+/* DNA base coloring enhancements */
+.text-red-400 {
+  text-shadow: 0 0 2px rgba(248, 113, 113, 0.3);
+}
+
+.text-blue-400 {
+  text-shadow: 0 0 2px rgba(96, 165, 250, 0.3);
+}
+
+.text-green-400 {
+  text-shadow: 0 0 2px rgba(74, 222, 128, 0.3);
+}
+
+.text-yellow-400 {
+  text-shadow: 0 0 2px rgba(250, 204, 21, 0.3);
+}
+
+/* Strand indicators styling */
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Load and Edit Lock button enhancements */
+#reference-load-btn,
+#sample-load-btn,
+#reference-edit-lock-mode,
+#sample-edit-lock-mode {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+#reference-load-btn:hover,
+#sample-load-btn:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+#reference-edit-lock-mode:hover,
+#sample-edit-lock-mode:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+/* Edit mode button state changes */
+.bg-blue-600\/20 {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+.border-blue-500\/30 {
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.text-blue-300 {
+  color: rgb(147, 197, 253);
+}
+
+/* SNP highlighting effects */
+.snp-highlight {
+  background: rgba(239, 68, 68, 0.3);
+  padding: 1px 2px;
+  border-radius: 2px;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  animation: snp-pulse 2s infinite;
+}
+
+@keyframes snp-pulse {
+  0%, 100% {
+    background: rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    background: rgba(239, 68, 68, 0.5);
+  }
+}
+
+/* Sequence comparison styling */
+.sequence-match {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.sequence-mismatch {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Enhanced scrollbar for sequence areas */
+#reference-results-content::-webkit-scrollbar,
+#sample-results-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#reference-results-content::-webkit-scrollbar-track,
+#sample-results-content::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 4px;
+}
+
+#reference-results-content::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+#sample-results-content::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.5);
+  border-radius: 4px;
+}
+
+#reference-results-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+#sample-results-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.7);
+}
+
+/* ===== SNP ANALYSIS RESULTS STYLING ===== */
+
+/* Analysis progress bar enhancements */
+#progress-bar {
+  transition: width 0.5s ease-in-out;
+}
+
+/* Quick results cards */
+#quick-total-snps,
+#quick-similarity {
+  transition: all 0.3s ease;
+}
+
+/* SNP breakdown section */
+#snp-breakdown {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Detailed results sections */
+#detailed-results > div {
+  animation: slideInLeft 0.4s ease-out;
+  animation-fill-mode: both;
+  transition: all 0.3s ease-out;
+}
+
+#detailed-results > div:nth-child(1) { animation-delay: 0.1s; }
+#detailed-results > div:nth-child(2) { animation-delay: 0.2s; }
+#detailed-results > div:nth-child(3) { animation-delay: 0.3s; }
+#detailed-results > div:nth-child(4) { animation-delay: 0.4s; }
+
+/* Smooth toggle animations for result sections */
+#snp-highlight-results,
+#stop-codon-results,
+#snp-frequency-results,
+#synonymous-results {
+  transition: all 0.3s ease-out;
+  transform-origin: top;
+}
+
+/* Hide sections by default */
+#snp-highlight-results,
+#stop-codon-results,
+#snp-frequency-results,
+#synonymous-results {
+  display: none;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Analysis option checkboxes */
+input[type="checkbox"]:checked + label {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* Analyze button enhanced styling */
+#analyze-snp-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#analyze-snp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+}
+
+#analyze-snp-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#analyze-snp-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#analyze-snp-btn:hover::before {
+  left: 100%;
+}
+
+/* Result indicator dots */
+.w-3.h-3.rounded-full {
+  box-shadow: 0 0 10px currentColor;
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 15px currentColor;
+  }
+}
+
+/* Status indicators */
+#quick-status {
+  transition: color 0.3s ease;
+}
+
+#quick-status:contains("complete") {
+  color: rgba(34, 197, 94, 0.8) !important;
+}
+
+#quick-status:contains("failed") {
+  color: rgba(239, 68, 68, 0.8) !important;
+}
+
+#quick-status:contains("Analyzing") {
+  color: rgba(34, 211, 238, 0.8) !important;
+}
+
+/* ===== ORF CLEANER SPECIFIC STYLES ===== */
+
+/* ORF Output Container */
+.orf-output-container {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.orf-output-container:hover {
+  background: rgba(30, 41, 59, 0.4);
+  border-color: rgba(234, 179, 8, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ORF Stat Badges */
+.orf-stat-badge {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.orf-stat-badge:hover {
+  background: rgba(234, 179, 8, 0.1);
+  border-color: rgba(234, 179, 8, 0.5);
+}
+
+/* ORF Action Buttons */
+.orf-action-btn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid;
+}
+
+.orf-load-btn {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: rgb(134, 239, 172);
+}
+
+.orf-load-btn:hover {
+  background: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.orf-copy-btn {
+  background: rgba(234, 179, 8, 0.2);
+  border-color: rgba(234, 179, 8, 0.3);
+  color: rgb(254, 240, 138);
+}
+
+.orf-copy-btn:hover {
+  background: rgba(234, 179, 8, 0.3);
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.2);
+}
+
+.orf-download-btn {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: rgb(134, 239, 172);
+}
+
+.orf-download-btn:hover {
+  background: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+/* ORF Badges */
+.orf-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  border: 1px solid;
+}
+
+.orf-improvements-badge {
+  background: rgba(234, 179, 8, 0.2);
+  border-color: rgba(234, 179, 8, 0.3);
+  color: rgb(254, 240, 138);
+}
+
+/* ORF Sequence Display */
+.orf-sequence-display {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  height: 28rem;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.orf-sequence-display:hover {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+/* ORF Stats Container */
+.orf-stats-container {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.orf-stats-container:hover {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(34, 211, 238, 0.3);
+}
+
+/* ORF Stat Cards */
+.orf-stat-card {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.orf-stat-card:hover {
+  background: rgba(30, 41, 59, 0.7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ORF Property Cards */
+.orf-property-card {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.orf-property-card:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+/* ORF Summary Card */
+.orf-summary-card {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.orf-summary-card:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+/* ORF Benefits Card */
+.orf-benefits-card {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.orf-benefits-card:hover {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+/* ORF Features Card */
+.orf-features-card {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: left;
+  max-width: 32rem;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.orf-features-card:hover {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+/* ORF Input Card */
+.orf-input-card {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.orf-input-card:hover {
+  background: rgba(30, 41, 59, 0.4);
+  border-color: rgba(234, 179, 8, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ORF Upload Area */
+.orf-upload-area {
+  background: rgba(15, 23, 42, 0.3);
+  border: 2px dashed rgba(71, 85, 105, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.orf-upload-area:hover {
+  border-color: rgba(234, 179, 8, 0.5);
+  background: rgba(234, 179, 8, 0.05);
+}
+
+.orf-upload-area:hover img {
+  opacity: 0.8;
+}
+
+/* ORF Textarea */
+.orf-textarea {
+  width: 100%;
+  height: 20rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: white;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.orf-textarea:focus {
+  outline: none;
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(234, 179, 8, 0.5);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+}
+
+/* ORF Clear Button */
+.orf-clear-btn {
+  padding: 0.25rem 0.75rem;
+  background: rgba(71, 85, 105, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.25rem;
+  color: rgb(203, 213, 225);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.orf-clear-btn:hover {
+  background: rgba(71, 85, 105, 0.7);
+}
+
+/* ORF Options Card */
+.orf-options-card {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.orf-options-card:hover {
+  background: rgba(30, 41, 59, 0.4);
+  border-color: rgba(234, 179, 8, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ORF Organism Selector */
+.orf-organism-selector {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.orf-organism-selector:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(234, 179, 8, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ORF Select */
+.orf-select {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: white;
+  transition: all 0.3s ease;
+  color-scheme: dark;
+}
+
+.orf-select:focus {
+  outline: none;
+  border-color: rgba(234, 179, 8, 0.5);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+}
+
+/* ORF Method Options */
+.orf-method-options {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.orf-method-options:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(249, 115, 22, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ORF Checkbox */
+.orf-checkbox {
+  width: 1rem;
+  height: 1rem;
+  color: rgb(249, 115, 22);
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.orf-checkbox:focus {
+  ring-color: rgba(249, 115, 22, 0.5);
+  ring-opacity: 0.5;
+}
+
+.orf-checkbox:checked {
+  background: rgb(249, 115, 22);
+  border-color: rgb(249, 115, 22);
+}
+
+/* ORF Advanced Options */
+.orf-advanced-options {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.orf-advanced-options:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ORF Range Slider */
+.orf-range-slider {
+  width: 100%;
+  height: 0.5rem;
+  background: rgba(71, 85, 105, 0.3);
+  border-radius: 0.25rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.orf-range-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: rgb(234, 179, 8);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.orf-range-slider::-webkit-slider-thumb:hover {
+  background: rgb(245, 158, 11);
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+
+/* ORF Select Small */
+.orf-select-small {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  color-scheme: dark;
+}
+
+.orf-select-small:focus {
+  outline: none;
+  border-color: rgba(234, 179, 8, 0.5);
+}
+
+/* ORF Toggle Advanced Button */
+.orf-toggle-advanced-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(71, 85, 105, 0.2);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.5rem;
+  color: rgb(203, 213, 225);
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.orf-toggle-advanced-btn:hover {
+  background: rgba(71, 85, 105, 0.3);
+  border-color: rgba(71, 85, 105, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ORF Clean Button */
+.orf-clean-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(245, 158, 11, 0.2));
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  border-radius: 0.75rem;
+  color: rgb(254, 240, 138);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.orf-clean-btn:hover {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.3), rgba(245, 158, 11, 0.3));
+  border-color: rgba(234, 179, 8, 0.5);
+  box-shadow: 0 8px 25px rgba(234, 179, 8, 0.3);
+}
+
+/* ORF Analyze Button */
+.orf-analyze-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(59, 130, 246, 0.2));
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 0.75rem;
+  color: rgb(165, 243, 252);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.orf-analyze-btn:hover {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.3));
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 8px 25px rgba(34, 211, 238, 0.3);
+}
+
+.orf-clean-btn::before,
+.orf-analyze-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.orf-clean-btn:hover::before,
+.orf-analyze-btn:hover::before {
+  left: 100%;
+}
+
+.orf-clean-btn:disabled,
+.orf-analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ORF Scrollbar Styling */
+.orf-sequence-display::-webkit-scrollbar,
+.orf-stats-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orf-sequence-display::-webkit-scrollbar-track,
+.orf-stats-container::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 4px;
+}
+
+.orf-sequence-display::-webkit-scrollbar-thumb {
+  background: rgba(234, 179, 8, 0.5);
+  border-radius: 4px;
+}
+
+.orf-stats-container::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.5);
+  border-radius: 4px;
+}
+
+.orf-sequence-display::-webkit-scrollbar-thumb:hover {
+  background: rgba(234, 179, 8, 0.7);
+}
+
+.orf-stats-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.7);
+}
+
+/* ORF Animation Effects */
+@keyframes orf-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#orf-cleaned-output,
+#orf-stats-output,
+#orf-report-output {
+  animation: orf-fadeInUp 0.5s ease-out;
+}
+
+/* ORF Responsive Design */
+@media (max-width: 1024px) {
+  .orf-output-container,
+  .orf-input-card,
+  .orf-options-card {
+    padding: 1rem;
+  }
+  
+  .orf-textarea {
+    height: 16rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .orf-stat-badge,
+  .orf-action-btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .orf-sequence-display {
+    height: 20rem;
+  }
+  
+  .grid.grid-cols-2.md\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid.grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Enhanced hover effects for result cards */
+.bg-slate-800\/30:hover {
+  background: rgba(30, 41, 59, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Monospace font enhancements for data */
+.font-mono {
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced Quick Results layout */
+.lg\:col-span-2 {
+  /* Quick Results section gets more space */
+}
+
+/* Analysis Options compact styling */
+#analyze-snp-btn {
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Coding Impact Analysis tags styling */
+.ml-7 .flex-wrap span {
+  font-size: 0.65rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.ml-7 .flex-wrap span:hover {
+  transform: scale(1.05);
+}
+
+/* ===== MUTATION HIGHLIGHTING STYLES ===== */
+
+/* Textareas with mutations - subtle visual indicators */
+.has-mutations {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  animation: mutation-pulse 2s ease-in-out infinite;
+}
+
+@keyframes mutation-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+}
+
+/* Mutation notification styling */
+.notification.info {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+}
+
+/* ===== SIMPLE HIGHLIGHTING STYLES ===== */
+
+/* Simple highlight for mutations */
+.simple-highlight {
+  background: rgba(255, 255, 0, 0.3);
+  padding: 1px;
+  border-radius: 2px;
+}
+
+/* SNP highlighting - only active when class is present */
+.snp-highlighting-active {
+  /* Remove the green border - we don't want an outline around the whole box */
+  /* border: 1px solid rgba(34, 197, 94, 0.3) !important; */
+}
+
+/* Individual SNP/mismatch highlighting - only highlight specific nucleotides */
+.snp-highlight {
+  background-color: rgba(239, 68, 68, 0.3) !important;  /* Red background for mismatches */
+  color: #fef2f2 !important;  /* Light text for contrast */
+  border-radius: 3px;
+  padding: 1px 2px;
+  font-weight: 600;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.3);
+  cursor: help;  /* Show it's interactive (tooltip) */
+}
+
+/* Hover effect for SNP highlights */
+.snp-highlight:hover {
+  background-color: rgba(239, 68, 68, 0.5) !important;
+  border-color: rgba(239, 68, 68, 0.8);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
+/* Alternative color scheme for transitions vs transversions */
+.snp-highlight[title*="transition"] {
+  background-color: rgba(34, 197, 94, 0.3) !important;  /* Green for transitions */
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 4px rgba(34, 197, 94, 0.3);
+}
+
+.snp-highlight[title*="transversion"] {
+  background-color: rgba(239, 68, 68, 0.3) !important;  /* Red for transversions */
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.3);
+}
+
+/* Reference sequence SNP highlighting - different color to match */
+.snp-highlight-reference {
+  background-color: rgba(59, 130, 246, 0.3) !important;  /* Blue background for reference */
+  color: #dbeafe !important;  /* Light blue text for contrast */
+  border-radius: 3px;
+  padding: 1px 2px;
+  font-weight: 600;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.3);
+  cursor: help;  /* Show it's interactive (tooltip) */
+}
+
+/* Hover effect for reference SNP highlights */
+.snp-highlight-reference:hover {
+  background-color: rgba(59, 130, 246, 0.5) !important;
+  border-color: rgba(59, 130, 246, 0.8);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
+/* Mutations details scrollbar */
+#mutations-details::-webkit-scrollbar {
+  width: 4px;
+}
+
+#mutations-details::-webkit-scrollbar-track {
+  background: rgba(71, 85, 105, 0.3);
+  border-radius: 2px;
+}
+
+#mutations-details::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.5);
+  border-radius: 2px;
+}
+
+#mutations-details::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.7);
+}
+
+/* Fixed height containers for SNP analysis */
+#reference-results-content,
+#sample-results-content {
+  max-height: calc(35rem - 4rem); /* Account for header height */
+  min-height: calc(35rem - 4rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Ensure the parent containers maintain fixed height */
+.h-\[35rem\] {
+  height: 35rem !important;
+  max-height: 35rem !important;
+}
+
+/* Smooth scrolling for sequence areas */
+#reference-results-content,
+#sample-results-content {
+  scroll-behavior: smooth;
+}
+
+/* Better text wrapping for long sequences */
+#reference-results-content .editable-sequence,
+#sample-results-content .editable-sequence {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+#reverse-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+}
+
+/* Reverse transcriber file upload area */
+#reverse-file-upload + div {
+  transition: all 0.3s ease;
+}
+
+#reverse-file-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Reverse transcriber file upload drag and drop states */
+.drag-over {
+  border-color: rgba(234, 179, 8, 0.6) !important;
+  background: rgba(234, 179, 8, 0.1) !important;
+}
+
+/* Reverse transcriber sequence length counter */
+#reverse-sequence-length {
+  font-family: 'Courier New', monospace;
+  color: rgba(234, 179, 8, 0.8);
+}
+
+/* Reverse transcriber clear button */
+#reverse-clear-btn {
+  transition: all 0.3s ease;
+}
+
+#reverse-clear-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Reverse transcriber radio buttons */
+input[name="reverse-input-type"] {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  transition: all 0.3s ease;
+}
+
+input[name="reverse-input-type"]:checked {
+  background: rgba(234, 179, 8, 0.8);
+  border-color: rgba(234, 179, 8, 0.8);
+}
+
+input[name="reverse-input-type"]:focus {
+  ring-color: rgba(234, 179, 8, 0.5);
+  ring-opacity: 0.5;
+}
+
+/* Reverse transcriber checkboxes */
+#reverse-standard-code,
+#reverse-both-strands,
+#reverse-include-stops {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  transition: all 0.3s ease;
+}
+
+#reverse-standard-code:checked {
+  background: rgba(59, 130, 246, 0.8);
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+#reverse-both-strands:checked {
+  background: rgba(34, 211, 238, 0.8);
+  border-color: rgba(34, 211, 238, 0.8);
+}
+
+#reverse-include-stops:checked {
+  background: rgba(239, 68, 68, 0.8);
+  border-color: rgba(239, 68, 68, 0.8);
+}
+
+/* Reverse transcriber main button styling */
+#reverse-transcribe-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#reverse-transcribe-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#reverse-transcribe-btn:hover::before {
+  left: 100%;
+}
+
+/* Reverse transcriber result containers */
+#reverse-dna-output,
+#reverse-complement-output {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#reverse-dna-result,
+#reverse-complement-result {
+  word-break: break-all;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* Reverse transcriber copy buttons */
+#copy-reverse-dna {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+#copy-reverse-dna:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+#copy-reverse-complement {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+#copy-reverse-complement:hover {
+  background: rgba(34, 211, 238, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.2);
+}
+
+/* Reverse transcriber copy button click animation */
+.reverse-copy-success {
+  background: rgba(34, 197, 94, 0.4) !important;
+  transform: scale(0.95);
+}
+
+/* Reverse transcriber empty state styling */
+#reverse-empty-output img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#reverse-empty-output:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* Reverse transcriber option cards hover effects */
+.bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ===== CHROMOSOME SPLITTER SPECIFIC STYLES ===== */
+
+/* Chromosome splitter file upload area */
+#chromosome-file-upload + div {
+  transition: all 0.3s ease;
+}
+
+#chromosome-file-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Chromosome splitter file upload drag and drop states */
+.drag-over {
+  border-color: rgba(244, 63, 94, 0.6) !important;
+  background: rgba(244, 63, 94, 0.1) !important;
+}
+
+.drag-over img {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+/* Chromosome splitter file info */
+#file-info {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+#remove-file {
+  transition: all 0.3s ease;
+}
+
+#remove-file:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Chromosome splitter main button */
+#split-chromosomes-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#split-chromosomes-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#split-chromosomes-btn:hover::before {
+  left: 100%;
+}
+
+#split-chromosomes-btn:disabled::before {
+  display: none;
+}
+
+/* Processing state animation */
+#processing-state {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Chromosome results */
+#chromosome-results {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#chromosome-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 63, 94, 0.5) rgba(30, 41, 59, 0.3);
+}
+
+#chromosome-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#chromosome-list::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 3px;
+}
+
+#chromosome-list::-webkit-scrollbar-thumb {
+  background: rgba(244, 63, 94, 0.5);
+  border-radius: 3px;
+}
+
+#chromosome-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 63, 94, 0.7);
+}
+
+/* Chromosome item styling */
+.chromosome-item {
+  transition: all 0.3s ease;
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.chromosome-item:hover {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(244, 63, 94, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Download buttons */
+#download-all-btn {
+  transition: all 0.3s ease;
+}
+
+#download-all-btn:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.download-chromosome-btn {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.download-chromosome-btn:hover {
+  background: rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* Statistics cards */
+#file-stats {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#file-stats .bg-slate-900\/30 {
+  transition: all 0.3s ease;
+}
+
+#file-stats .bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Empty state styling */
+#splitter-empty-state img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#splitter-empty-state:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+#empty-stats img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#empty-stats:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* ===== CODON OPTIMIZER SPECIFIC STYLES ===== */
+
+/* Codon optimizer input textarea styling */
+#optimizer-input {
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+#optimizer-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(132, 204, 22, 0.2);
+}
+
+/* Codon optimizer file upload area */
+#optimizer-file-upload + div {
+  transition: all 0.3s ease;
+}
+
+#optimizer-file-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Codon optimizer sequence length counter */
+#optimizer-sequence-length {
+  font-family: 'Courier New', monospace;
+  color: rgba(132, 204, 22, 0.8);
+}
+
+/* GC content indicators */
+#current-gc-content,
+#output-gc-content {
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+/* Current GC content indicator (input) */
+.bg-slate-700\/50.border-emerald-500\/30 {
+  background: rgba(51, 65, 85, 0.5);
+  border-color: rgba(34, 197, 94, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-emerald-500\/30:hover {
+  background: rgba(51, 65, 85, 0.7);
+  border-color: rgba(34, 197, 94, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+}
+
+/* Output GC content indicator */
+.bg-slate-700\/50.border-lime-500\/30 {
+  background: rgba(51, 65, 85, 0.5);
+  border-color: rgba(132, 204, 22, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-lime-500\/30:hover {
+  background: rgba(51, 65, 85, 0.7);
+  border-color: rgba(132, 204, 22, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(132, 204, 22, 0.2);
+}
+
+/* GC content value animation */
+#current-gc-content.updating,
+#output-gc-content.updating {
+  color: rgba(132, 204, 22, 1);
+  text-shadow: 0 0 8px rgba(132, 204, 22, 0.5);
+  animation: gcPulse 0.5s ease-out;
+}
+
+@keyframes gcPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Codon optimizer clear button */
+#optimizer-clear-btn {
+  transition: all 0.3s ease;
+}
+
+#optimizer-clear-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown selectors styling */
+#gc-optimizer,
+#codon-optimizer {
+  transition: all 0.3s ease;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+#gc-optimizer:focus {
+  background: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+#codon-optimizer:focus {
+  background: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* Custom GC target slider */
+#gc-target-slider {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 8px;
+  height: 6px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#gc-target-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.8);
+  cursor: pointer;
+  border: 2px solid rgba(34, 197, 94, 1);
+  transition: all 0.3s ease;
+}
+
+#gc-target-slider::-webkit-slider-thumb:hover {
+  background: rgba(34, 197, 94, 1);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+#gc-target-value {
+  transition: all 0.3s ease;
+}
+
+/* Custom GC target container animation */
+#custom-gc-target {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Advanced settings checkboxes */
+#avoid-rare-codons,
+#remove-restriction-sites,
+#optimize-folding {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  transition: all 0.3s ease;
+}
+
+#avoid-rare-codons:checked,
+#remove-restriction-sites:checked,
+#optimize-folding:checked {
+  background: rgba(234, 179, 8, 0.8);
+  border-color: rgba(234, 179, 8, 0.8);
+}
+
+/* Optimize button styling */
+#optimize-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#optimize-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#optimize-btn:hover::before {
+  left: 100%;
+}
+
+/* Optimization results */
+#optimized-output {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#optimized-result {
+  word-break: break-all;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* Copy button for optimized result */
+#copy-optimized {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+#copy-optimized:hover {
+  background: rgba(132, 204, 22, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(132, 204, 22, 0.2);
+}
+
+/* Optimization statistics */
+#optimization-stats {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#optimization-stats .bg-slate-900\/30 {
+  transition: all 0.3s ease;
+}
+
+#optimization-stats .bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Empty state styling */
+#optimizer-empty-state img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#optimizer-empty-state:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* Option cards hover effects */
+.bg-slate-900\/30.border-emerald-500\/20:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.bg-slate-900\/30.border-blue-500\/20:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.bg-slate-900\/30.border-yellow-500\/20:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+/* ===== BASE COUNTER SPECIFIC STYLES ===== */
+
+/* Base counter input textarea styling */
+#counter-input {
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+#counter-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+}
+
+/* Base counter file upload area */
+#counter-file-upload + div {
+  transition: all 0.3s ease;
+}
+
+#counter-file-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Base counter sequence length counter */
+#counter-sequence-length {
+  font-family: 'Courier New', monospace;
+  color: rgba(99, 102, 241, 0.8);
+}
+
+/* Real-time GC content indicator */
+#realtime-gc-content {
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-indigo-500\/30 {
+  background: rgba(51, 65, 85, 0.5);
+  border-color: rgba(99, 102, 241, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-indigo-500\/30:hover {
+  background: rgba(51, 65, 85, 0.7);
+  border-color: rgba(99, 102, 241, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+/* Base counter clear button */
+#counter-clear-btn {
+  transition: all 0.3s ease;
+}
+
+#counter-clear-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Analyze button styling */
+#analyze-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#analyze-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#analyze-btn:hover::before {
+  left: 100%;
+}
+
+/* Base results animation */
+#base-results {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Individual base count cards */
+#base-results .bg-slate-900\/30 {
+  transition: all 0.3s ease;
+}
+
+#base-results .bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Base count numbers animation */
+#adenine-count,
+#thymine-count,
+#guanine-count,
+#cytosine-count,
+#final-gc-content {
+  transition: all 0.3s ease;
+}
+
+#adenine-count.updating,
+#thymine-count.updating,
+#guanine-count.updating,
+#cytosine-count.updating,
+#final-gc-content.updating {
+  animation: countPulse 0.5s ease-out;
+}
+
+@keyframes countPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    text-shadow: 0 0 10px currentColor;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* GC content highlight card */
+.bg-gradient-to-r.from-emerald-900\/30.to-yellow-900\/30 {
+  background: linear-gradient(to right, rgba(6, 78, 59, 0.3), rgba(133, 77, 14, 0.3));
+  transition: all 0.3s ease;
+}
+
+.bg-gradient-to-r.from-emerald-900\/30.to-yellow-900\/30:hover {
+  background: linear-gradient(to right, rgba(6, 78, 59, 0.5), rgba(133, 77, 14, 0.5));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* GC classification text */
+#gc-classification {
+  transition: all 0.3s ease;
+}
+
+#gc-classification.low-gc {
+  color: rgba(239, 68, 68, 0.8);
+}
+
+#gc-classification.moderate-gc {
+  color: rgba(234, 179, 8, 0.8);
+}
+
+#gc-classification.high-gc {
+  color: rgba(34, 197, 94, 0.8);
+}
+
+/* Sequence summary animation */
+#sequence-summary {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#sequence-summary .bg-slate-900\/30 {
+  transition: all 0.3s ease;
+}
+
+#sequence-summary .bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Empty state styling */
+#counter-empty-state img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#counter-empty-state:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+#empty-summary img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#empty-summary:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* Base color dots */
+.w-3.h-3.bg-red-500 {
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+.w-3.h-3.bg-blue-500 {
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+}
+
+.w-3.h-3.bg-emerald-500 {
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+.w-3.h-3.bg-yellow-500 {
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.3);
+}
+
+/* ===== DNA SEQUENCER SPECIFIC STYLES ===== */
+
+/* Sequencer output box - FULL WIDTH EXTENSION */
+#sequencer-output {
+  transition: all 0.3s ease;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  width: 100% !important;
+  max-width: none !important;
+  display: block;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* DNA sequence container - EXTENDED FULL WIDTH */
+#sequencer-output > div {
+  width: 100% !important;
+  max-width: none !important;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-break: break-all;
+}
+
+/* DNA sequence lines - EXTENDED FULL WIDTH */
+#sequencer-output .bg-black\/30 {
+  width: 100% !important;
+  max-width: none !important;
+  display: block;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-break: break-all;
+}
+
+#sequencer-output .bg-black\/30 > div {
+  width: 100% !important;
+  max-width: none !important;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-break: break-all;
+  display: block;
+}
+
+/* Edit Lock Mode Styles */
+#sequencer-output[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+#sequencer-output[contenteditable="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+  border-color: #f59e0b !important;
+}
+
+/* Edit mode indicator */
+#sequencer-output[contenteditable="true"]::before {
+  content: "✏️ EDIT MODE - Click to edit DNA sequence";
+  display: block;
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+/* Restriction Cleaner Edit Mode - NO HIGHLIGHTING */
+#cleaned-result[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+  border-radius: 0px;
+  padding: 0px;
+  margin: 0px;
+  transition: all 0.3s ease;
+  background-color: transparent !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+#cleaned-result[contenteditable="true"]:focus {
+  box-shadow: none !important;
+  border-color: #f59e0b !important;
+  background-color: transparent !important;
+  background: none !important;
+  outline: none !important;
+}
+
+#cleaned-result[contenteditable="true"]:hover {
+  background-color: transparent !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+#cleaned-result[contenteditable="true"]:before,
+#cleaned-result[contenteditable="true"]:after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Ensure line numbers and strand indicators stay non-editable */
+#cleaned-result [contenteditable="false"] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  color: inherit !important;
+}
+
+/* Only DNA sequence spans should be editable */
+#cleaned-result .editable-sequence {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Sequencer input textarea */
+#sequencer-manual-input {
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+#sequencer-manual-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+/* Sequencer file upload area */
+#sequencer-file-upload + div {
+  transition: all 0.3s ease;
+}
+
+#sequencer-file-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Sequencer sequence length counter */
+#sequencer-sequence-length {
+  font-family: 'Courier New', monospace;
+  color: rgba(34, 197, 94, 0.8);
+}
+
+/* Sequencer GC content and melting temperature indicators */
+#sequencer-input-gc,
+#sequencer-output-gc,
+#sequencer-output-tm {
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+/* Sequencer clear button */
+#sequencer-clear-btn {
+  transition: all 0.3s ease;
+}
+
+#sequencer-clear-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Advanced options sections */
+.bg-slate-900\/30.border-red-500\/20,
+.bg-slate-900\/30.border-blue-500\/20,
+.bg-slate-900\/30.border-yellow-500\/20,
+.bg-slate-900\/30.border-emerald-500\/20,
+.bg-slate-900\/30.border-cyan-500\/20,
+.bg-slate-900\/30.border-indigo-500\/20,
+.bg-slate-900\/30.border-purple-500\/20 {
+  transition: all 0.3s ease;
+}
+
+.bg-slate-900\/30.border-red-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+.bg-slate-900\/30.border-blue-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+.bg-slate-900\/30.border-yellow-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(234, 179, 8, 0.4);
+  transform: translateY(-1px);
+}
+
+.bg-slate-900\/30.border-emerald-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(34, 197, 94, 0.4);
+  transform: translateY(-1px);
+}
+
+.bg-slate-900\/30.border-cyan-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(34, 211, 238, 0.4);
+  transform: translateY(-1px);
+}
+
+.bg-slate-900\/30.border-indigo-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.bg-slate-900\/30.border-purple-500\/20:hover {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Sequencer checkboxes styling */
+#find-restriction-enzymes:checked {
+  background: rgba(239, 68, 68, 0.8);
+  border-color: rgba(239, 68, 68, 0.8);
+}
+
+#reading-frame-1:checked,
+#reading-frame-2:checked,
+#reading-frame-3:checked,
+#reading-frame-all:checked {
+  background: rgba(59, 130, 246, 0.8);
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+/* Amino acids dropdown styling */
+#amino-acids-finder {
+  transition: all 0.3s ease;
+}
+
+#amino-acids-finder:focus {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+#analyze-gc-content:checked {
+  background: rgba(34, 211, 238, 0.8);
+  border-color: rgba(34, 211, 238, 0.8);
+}
+
+/* Sequencer dropdowns */
+#color-scheme,
+#sequencer-gc-optimizer,
+#sequencer-codon-optimizer {
+  transition: all 0.3s ease;
+}
+
+#color-scheme:focus {
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+}
+
+#sequencer-gc-optimizer:focus {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+}
+
+#sequencer-codon-optimizer:focus {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+/* Sequencer analyze button */
+#sequencer-analyze-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#sequencer-analyze-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#sequencer-analyze-btn:hover::before {
+  left: 100%;
+}
+
+/* Sequencer results animation */
+#sequencer-results {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Copy sequencer results button */
+#copy-sequencer-results {
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+#copy-sequencer-results:hover {
+  background: rgba(34, 211, 238, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.2);
+}
+
+/* Sequencer empty state */
+#sequencer-empty-state img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#sequencer-empty-state:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* Color scheme specific styling */
+.nucleotide-a {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.nucleotide-t {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.nucleotide-g {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.nucleotide-c {
+  color: #eab308;
+  background: rgba(234, 179, 8, 0.1);
+}
+
+/* Purine/Pyrimidine coloring */
+.purine {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.pyrimidine {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* GC/AT coloring */
+.gc-base {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.at-base {
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+/* Rainbow coloring */
+.rainbow-a {
+  color: #ef4444;
+  text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+}
+
+.rainbow-t {
+  color: #3b82f6;
+  text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+.rainbow-g {
+  color: #22c55e;
+  text-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+}
+
+.rainbow-c {
+  color: #eab308;
+  text-shadow: 0 0 5px rgba(234, 179, 8, 0.5);
+}
+
+/* Monochrome intensity */
+.mono-a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.mono-t {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.mono-g {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mono-c {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Restriction enzyme site highlighting */
+.restriction-site {
+  background: rgba(239, 68, 68, 0.3);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 3px;
+  padding: 1px 2px;
+  font-weight: bold;
+}
+
+/* Reading frame highlighting */
+.reading-frame-1 {
+  border-bottom: 2px solid rgba(59, 130, 246, 0.6);
+}
+
+.reading-frame-2 {
+  border-bottom: 2px solid rgba(34, 197, 94, 0.6);
+}
+
+.reading-frame-3 {
+  border-bottom: 2px solid rgba(234, 179, 8, 0.6);
+}
+
+/* Amino acid highlighting */
+.amino-acid {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 3px;
+  padding: 1px 3px;
+  margin: 0 1px;
+  font-weight: bold;
+  color: #22c55e;
+}
+
+/* ===== GENOME COMPARATOR SPECIFIC STYLES ===== */
+
+/* Gene input textareas styling */
+#my-gene-input,
+#db-gene-input {
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+#my-gene-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+#db-gene-input:focus {
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* File upload areas */
+#my-gene-upload + div,
+#db-gene-upload + div {
+  transition: all 0.3s ease;
+}
+
+#my-gene-upload + div:hover img,
+#db-gene-upload + div:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Gene length counters */
+#my-gene-length,
+#db-gene-length {
+  font-family: 'Courier New', monospace;
+}
+
+/* GC content indicators for genes */
+#my-gene-gc,
+#db-gene-gc {
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-emerald-500\/30 {
+  background: rgba(51, 65, 85, 0.5);
+  border-color: rgba(34, 197, 94, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-blue-500\/30 {
+  background: rgba(51, 65, 85, 0.5);
+  border-color: rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-slate-700\/50.border-emerald-500\/30:hover,
+.bg-slate-700\/50.border-blue-500\/30:hover {
+  background: rgba(51, 65, 85, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Clear buttons */
+#clear-my-gene,
+#clear-db-gene {
+  transition: all 0.3s ease;
+}
+
+#clear-my-gene:hover,
+#clear-db-gene:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Compare genes button */
+#compare-genes-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#compare-genes-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+#compare-genes-btn:hover::before {
+  left: 100%;
+}
+
+/* Comparison results animation */
+#comparison-results {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Overall match score card */
+.bg-gradient-to-r.from-purple-900\/30.to-pink-900\/30 {
+  background: linear-gradient(to right, rgba(88, 28, 135, 0.3), rgba(131, 24, 67, 0.3));
+  transition: all 0.3s ease;
+}
+
+.bg-gradient-to-r.from-purple-900\/30.to-pink-900\/30:hover {
+  background: linear-gradient(to right, rgba(88, 28, 135, 0.5), rgba(131, 24, 67, 0.5));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Match score animation */
+#match-score {
+  transition: all 0.3s ease;
+}
+
+#match-score.updating {
+  animation: scorePulse 0.8s ease-out;
+}
+
+@keyframes scorePulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+    text-shadow: 0 0 20px currentColor;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Match classification colors */
+#match-classification.no-match {
+  color: rgba(239, 68, 68, 0.8);
+}
+
+#match-classification.low-match {
+  color: rgba(234, 179, 8, 0.8);
+}
+
+#match-classification.moderate-match {
+  color: rgba(34, 211, 238, 0.8);
+}
+
+#match-classification.high-match {
+  color: rgba(34, 197, 94, 0.8);
+}
+
+#match-classification.perfect-match {
+  color: rgba(168, 85, 247, 0.8);
+}
+
+/* Statistics cards */
+#comparison-results .bg-slate-900\/30 {
+  transition: all 0.3s ease;
+}
+
+#comparison-results .bg-slate-900\/30:hover {
+  background: rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Statistics numbers animation */
+#identical-bases,
+#different-bases,
+#length-diff {
+  transition: all 0.3s ease;
+}
+
+#identical-bases.updating,
+#different-bases.updating,
+#length-diff.updating {
+  animation: countPulse 0.5s ease-out;
+}
+
+/* GC content comparison */
+#my-gene-gc-final,
+#db-gene-gc-final,
+#gc-difference {
+  transition: all 0.3s ease;
+}
+
+#my-gene-gc-final.updating,
+#db-gene-gc-final.updating,
+#gc-difference.updating {
+  animation: gcPulse 0.5s ease-out;
+}
+
+/* Alignment preview */
+#alignment-my-gene,
+#alignment-match,
+#alignment-db-gene {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+#show-full-alignment {
+  transition: all 0.3s ease;
+}
+
+#show-full-alignment:hover {
+  background: rgba(249, 115, 22, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+/* Match verdict animations */
+#match-verdict {
+  transition: all 0.5s ease;
+}
+
+#verdict-icon {
+  transition: all 0.5s ease;
+}
+
+#verdict-icon.match-found {
+  filter: hue-rotate(120deg) brightness(1.2);
+  animation: bounce 0.6s ease-out;
+}
+
+#verdict-icon.no-match-found {
+  filter: hue-rotate(0deg) brightness(0.8);
+  animation: shake 0.6s ease-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Verdict title colors */
+#verdict-title.perfect-match {
+  color: rgba(168, 85, 247, 1);
+}
+
+#verdict-title.high-match {
+  color: rgba(34, 197, 94, 1);
+}
+
+#verdict-title.moderate-match {
+  color: rgba(34, 211, 238, 1);
+}
+
+#verdict-title.low-match {
+  color: rgba(234, 179, 8, 1);
+}
+
+#verdict-title.no-match {
+  color: rgba(239, 68, 68, 1);
+}
+
+/* Empty state styling */
+#comparator-empty-state img {
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.3s ease;
+}
+
+#comparator-empty-state:hover img {
+  filter: grayscale(0) opacity(0.6);
+  transform: scale(1.1);
+}
+
+/* Processing state animation */
+#comparison-processing .animate-spin {
+  border-color: rgba(20, 184, 166, 0.3);
+  border-top-color: rgba(20, 184, 166, 1);
+}
+
+/* SNP Highlighter Responsive Fixes */
+#snp-highlighter-page .bg-slate-800\/30.backdrop-blur-sm {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Ensure SNP highlighter containers are responsive */
+#snp-highlighter-page .max-w-7xl {
+  max-width: 100% !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Fix SNP highlighter grid responsiveness */
+#snp-highlighter-page .grid.grid-cols-1.lg\\:grid-cols-2 {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure SNP result containers don't overflow */
+#reference-results-content,
+#sample-results-content {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
