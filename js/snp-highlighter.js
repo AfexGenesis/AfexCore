@@ -416,8 +416,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 args.push(type);
             }
 
-            console.log('🐍 Calling SNP Highlighter Python script:', scriptPath);
-            console.log('🔧 Arguments:', args);
+            console.log('Calling SNP Highlighter Python script:', scriptPath);
+            console.log('Arguments:', args);
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -437,26 +437,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             pythonProcess.on('close', (code) => {
-                console.log(`🐍 Python process exited with code: ${code}`);
+                console.log(`Python process exited with code: ${code}`);
                 
                 if (code !== 0) {
-                    console.error('❌ Python stderr:', stderr);
+                    console.error('Python stderr:', stderr);
                     reject(new Error(`Python script failed with code ${code}: ${stderr}`));
                     return;
                 }
 
                 try {
-                    console.log('📤 Python stdout:', stdout);
+                    console.log('Python stdout:', stdout);
                     const result = JSON.parse(stdout);
                     resolve(result);
                 } catch (error) {
-                    console.error('❌ Failed to parse Python output:', stdout);
+                    console.error('Failed to parse Python output:', stdout);
                     reject(new Error(`Failed to parse Python output: ${error.message}`));
                 }
             });
 
             pythonProcess.on('error', (error) => {
-                console.error('❌ Python process error:', error);
+                console.error('Python process error:', error);
                 reject(new Error(`Failed to start Python process: ${error.message}`));
             });
         });

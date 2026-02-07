@@ -12,7 +12,7 @@ class PythonGeneComparator {
     init() {
         this.bindEvents();
         this.setupFileUploads();
-        console.log('🧬 Python Gene Comparator initialized');
+        console.log('Python Gene Comparator initialized');
     }
 
     bindEvents() {
@@ -254,7 +254,7 @@ class PythonGeneComparator {
                 '--format', 'auto'
             ];
 
-            console.log('🐍 Calling Python Gene Comparator:', scriptPath);
+            console.log('Calling Python Gene Comparator:', scriptPath);
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -283,26 +283,26 @@ class PythonGeneComparator {
             pythonProcess.stdin.end();
 
             pythonProcess.on('close', (code) => {
-                console.log(`🐍 Python process exited with code: ${code}`);
+                console.log(`Python process exited with code: ${code}`);
                 
                 if (code === 0) {
                     try {
                         const result = JSON.parse(stdout);
-                        console.log('✅ Python result:', result);
+                        console.log('Python result:', result);
                         resolve(result);
                     } catch (parseError) {
-                        console.error('❌ Failed to parse Python output:', parseError);
+                        console.error('Failed to parse Python output:', parseError);
                         console.error('Raw stdout:', stdout);
                         reject(new Error(`Failed to parse Python output: ${parseError.message}`));
                     }
                 } else {
-                    console.error('❌ Python script failed:', stderr);
+                    console.error('Python script failed:', stderr);
                     reject(new Error(`Python script failed: ${stderr || 'Unknown error'}`));
                 }
             });
 
             pythonProcess.on('error', (error) => {
-                console.error('❌ Failed to start Python process:', error);
+                console.error('Failed to start Python process:', error);
                 reject(new Error(`Failed to start Python process: ${error.message}`));
             });
         });

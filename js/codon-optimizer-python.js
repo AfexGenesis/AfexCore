@@ -312,8 +312,8 @@ class CodonOptimizerPython {
                 args.push('--optimize-folding');
             }
 
-            console.log('⚡ Calling Codon Optimizer:', scriptPath);
-            console.log('⚡ Full command:', 'python', args.join(' '));
+            console.log('Calling Codon Optimizer:', scriptPath);
+            console.log('Full command:', 'python', args.join(' '));
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -333,26 +333,26 @@ class CodonOptimizerPython {
             });
 
             pythonProcess.on('close', (code) => {
-                console.log(`⚡ Python process exited with code: ${code}`);
+                console.log(`Python process exited with code: ${code}`);
                 
                 if (code === 0) {
                     try {
                         const result = JSON.parse(stdout);
-                        console.log('✅ Codon Optimizer result:', result);
+                        console.log('Codon Optimizer result:', result);
                         resolve(result);
                     } catch (parseError) {
-                        console.error('❌ Failed to parse Python output:', parseError);
+                        console.error('Failed to parse Python output:', parseError);
                         console.error('Raw stdout:', stdout);
                         reject(new Error(`Failed to parse Python output: ${parseError.message}`));
                     }
                 } else {
-                    console.error('❌ Python script failed:', stderr);
+                    console.error('Python script failed:', stderr);
                     reject(new Error(`Python script failed: ${stderr || 'Unknown error'}`));
                 }
             });
 
             pythonProcess.on('error', (error) => {
-                console.error('❌ Failed to start Python process:', error);
+                console.error('Failed to start Python process:', error);
                 reject(new Error(`Failed to start Python process: ${error.message}`));
             });
         });
@@ -399,8 +399,8 @@ class CodonOptimizerPython {
         }
 
         // Log result info
-        console.log('⚡ Optimization Info:', result.optimization_info);
-        console.log('⚡ Statistics:', result.statistics);
+        console.log('Optimization Info:', result.optimization_info);
+        console.log('Statistics:', result.statistics);
     }
 
     hideAllOutputs() {

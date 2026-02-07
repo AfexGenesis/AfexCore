@@ -85,13 +85,13 @@ class ChromosomeSplitterPython {
                 this.showLoadingOverlay('Reading FASTA file...');
             }
 
-            console.log('📖 Reading file...');
+            console.log('Reading file...');
             const fileContent = await this.readFile(file);
             
             // Check if we got a temp file path instead of content (for very large files)
             if (typeof fileContent === 'string' && fileContent.startsWith('TEMP_FILE:')) {
                 const tempFilePath = fileContent.substring('TEMP_FILE:'.length);
-                console.log('✅ Large file streamed to temp location:', tempFilePath);
+                console.log('Large file streamed to temp location:', tempFilePath);
                 
                 this.fastaFile = {
                     name: file.name,
@@ -101,7 +101,7 @@ class ChromosomeSplitterPython {
                     isLargeFile: true
                 };
             } else {
-                console.log('✅ File read successfully, content length:', fileContent.length);
+                console.log('File read successfully, content length:', fileContent.length);
                 
                 this.fastaFile = {
                     name: file.name,
@@ -120,7 +120,7 @@ class ChromosomeSplitterPython {
             this.showNotification(`FASTA file "${file.name}" loaded successfully`, 'success');
 
         } catch (error) {
-            console.error('❌ FASTA upload error:', error);
+            console.error('FASTA upload error:', error);
             this.hideLoadingOverlay();
             this.showNotification(`Failed to load FASTA file: ${error.message}`, 'error');
         }
@@ -165,7 +165,7 @@ class ChromosomeSplitterPython {
             const fileSizeGB = (file.size / (1024 * 1024 * 1024)).toFixed(2);
             const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
             
-            console.log(`🧬 LARGE FASTA FILE DETECTED`);
+            console.log(`LARGE FASTA FILE DETECTED`);
             console.log(`File: ${file.name}`);
             console.log(`Size: ${fileSizeGB} GB (${fileSizeMB} MB)`);
             console.log(`Creating temporary copy for processing...`);
@@ -189,16 +189,16 @@ class ChromosomeSplitterPython {
             const tempFileName = `chromosome_splitter_${Date.now()}_${safeName}`;
             const tempFilePath = path.join(tempDir, tempFileName);
             
-            console.log(`📝 Creating temporary copy: ${tempFilePath}`);
+            console.log(`Creating temporary copy: ${tempFilePath}`);
             
             // Stream file to disk in chunks
             await this.streamFileToDisk(file, tempFilePath);
             
-            console.log(`📖 Reading temp file back in chunks to avoid 2GB limit...`);
+            console.log(`Reading temp file back in chunks to avoid 2GB limit...`);
             
             // For files >2GB, we can't load into JavaScript string - use streaming approach
             if (file.size > 2 * 1024 * 1024 * 1024) { // > 2GB
-                console.log(`🧬 File is >2GB - using streaming approach without loading into memory`);
+                console.log(`File is >2GB - using streaming approach without loading into memory`);
                 
                 // Return a special marker indicating this is a temp file
                 // The processing functions will handle streaming directly from disk
@@ -214,13 +214,13 @@ class ChromosomeSplitterPython {
                     // Clean up temp file
                     fs.unlink(tempFilePath, (unlinkErr) => {
                         if (unlinkErr) {
-                            console.warn(`⚠️ Could not delete temp file: ${tempFilePath}`);
+                            console.warn(`Could not delete temp file: ${tempFilePath}`);
                         } else {
-                            console.log(`🗑️ Cleaned up temp file: ${tempFilePath}`);
+                            console.log(`Cleaned up temp file: ${tempFilePath}`);
                         }
                     });
                     
-                    console.log(`✅ Large file read successfully in chunks, content length: ${tempContent.length}`);
+                    console.log(`Large file read successfully in chunks, content length: ${tempContent.length}`);
                     resolve(tempContent);
                 })
                 .catch(err => {
@@ -230,7 +230,7 @@ class ChromosomeSplitterPython {
                 });
             
         } catch (error) {
-            console.error('❌ Failed to stream large file:', error);
+            console.error('Failed to stream large file:', error);
             reject(new Error(`Failed to process large file: ${error.message}`));
         }
     }
@@ -260,7 +260,7 @@ class ChromosomeSplitterPython {
                     
                     // Show progress
                     const progress = Math.min(100, Math.round((offset / file.size) * 100));
-                    console.log(`📋 Creating temp copy: ${progress}%`);
+                    console.log(`Creating temp copy: ${progress}%`);
                     
                     // Continue writing
                     setTimeout(writeNextChunk, 10);
@@ -297,19 +297,19 @@ class ChromosomeSplitterPython {
                 }
                 
                 const fileSize = stats.size;
-                console.log(`📊 Reading ${(fileSize / (1024 * 1024 * 1024)).toFixed(2)}GB file in ${Math.ceil(fileSize / chunkSize)} chunks...`);
+                console.log(`Reading ${(fileSize / (1024 * 1024 * 1024)).toFixed(2)}GB file in ${Math.ceil(fileSize / chunkSize)} chunks...`);
                 
                 const readNextChunk = () => {
                     if (position >= fileSize) {
                         // Join all chunks at the end - this is more memory efficient
-                        console.log(`🔗 Joining ${contentChunks.length} chunks into final content...`);
+                        console.log(`Joining ${contentChunks.length} chunks into final content...`);
                         try {
                             const finalContent = contentChunks.join('');
                             contentChunks = null; // Free memory
-                            console.log(`✅ Large file read successfully, final content length: ${finalContent.length}`);
+                            console.log(`Large file read successfully, final content length: ${finalContent.length}`);
                             resolve(finalContent);
                         } catch (joinError) {
-                            console.error('❌ Failed to join chunks - file too large for JavaScript string:', joinError);
+                            console.error('Failed to join chunks - file too large for JavaScript string:', joinError);
                             reject(new Error(`File is too large to process in JavaScript. The file exceeds JavaScript's string length limit. Consider using a smaller file or processing it in smaller sections.`));
                         }
                         return;
@@ -338,7 +338,7 @@ class ChromosomeSplitterPython {
                             
                             // Show progress
                             const progress = Math.min(100, Math.round((position / fileSize) * 100));
-                            console.log(`📖 Reading chunks: ${progress}%`);
+                            console.log(`Reading chunks: ${progress}%`);
                             
                             // Continue reading next chunk
                             setTimeout(readNextChunk, 10);
@@ -433,9 +433,9 @@ class ChromosomeSplitterPython {
             const fs = require('fs');
             fs.unlink(this.fastaFile.tempFilePath, (err) => {
                 if (err) {
-                    console.warn(`⚠️ Could not delete temp file: ${this.fastaFile.tempFilePath}`);
+                    console.warn(`Could not delete temp file: ${this.fastaFile.tempFilePath}`);
                 } else {
-                    console.log(`🗑️ Cleaned up temp file: ${this.fastaFile.tempFilePath}`);
+                    console.log(`Cleaned up temp file: ${this.fastaFile.tempFilePath}`);
                 }
             });
         }
@@ -444,7 +444,7 @@ class ChromosomeSplitterPython {
         if (this.chromosomeData && this.chromosomeData.tempDir) {
             const fs = require('fs');
             fs.rmSync(this.chromosomeData.tempDir, { recursive: true, force: true });
-            console.log(`🗑️ Cleaned up chromosome temp directory: ${this.chromosomeData.tempDir}`);
+            console.log(`Cleaned up chromosome temp directory: ${this.chromosomeData.tempDir}`);
         }
         
         this.fastaFile = null;
@@ -483,9 +483,9 @@ class ChromosomeSplitterPython {
             if (this.fastaFile && this.fastaFile.isLargeFile && this.fastaFile.tempFilePath) {
                 fs.unlink(this.fastaFile.tempFilePath, (err) => {
                     if (err) {
-                        console.warn(`⚠️ Could not delete temp file: ${this.fastaFile.tempFilePath}`);
+                        console.warn(`Could not delete temp file: ${this.fastaFile.tempFilePath}`);
                     } else {
-                        console.log(`🗑️ Cleaned up temp file: ${this.fastaFile.tempFilePath}`);
+                        console.log(`Cleaned up temp file: ${this.fastaFile.tempFilePath}`);
                     }
                 });
             }
@@ -493,10 +493,10 @@ class ChromosomeSplitterPython {
             // Clean up chromosome temp directory
             if (this.chromosomeData && this.chromosomeData.tempDir) {
                 fs.rmSync(this.chromosomeData.tempDir, { recursive: true, force: true });
-                console.log(`🗑️ Cleaned up chromosome temp directory: ${this.chromosomeData.tempDir}`);
+                console.log(`Cleaned up chromosome temp directory: ${this.chromosomeData.tempDir}`);
             }
         } catch (error) {
-            console.warn('⚠️ Error during temp file cleanup:', error);
+            console.warn('Error during temp file cleanup, if u see this pls fix this code ts gave me a headache its still not working:', error);
         }
     }
 
@@ -514,7 +514,7 @@ class ChromosomeSplitterPython {
             
             // Handle large files with streaming parser
             if (this.fastaFile.isLargeFile && this.fastaFile.tempFilePath) {
-                console.log('🧬 Using streaming parser for large file...');
+                console.log('Using streaming parser for large file...');
                 const result = await this.parseFastaStreaming(this.fastaFile.tempFilePath);
                 chromosomes = result.chromosomes;
                 tempDir = result.tempDir;
@@ -530,7 +530,7 @@ class ChromosomeSplitterPython {
             this.chromosomeData = chromosomes;
             this.chromosomeData.tempDir = tempDir; // Store temp directory for cleanup
             
-            console.log(`🎯 About to display ${chromosomes.length} chromosomes`);
+            console.log(`About to display ${chromosomes.length} chromosomes`);
             console.log('First few chromosomes:', chromosomes.slice(0, 3));
             
             this.displayResults(chromosomes);
@@ -540,9 +540,9 @@ class ChromosomeSplitterPython {
                 const fs = require('fs');
                 fs.unlink(this.fastaFile.tempFilePath, (err) => {
                     if (err) {
-                        console.warn(`⚠️ Could not delete temp file: ${this.fastaFile.tempFilePath}`);
+                        console.warn(`Could not delete temp file: ${this.fastaFile.tempFilePath}`);
                     } else {
-                        console.log(`🗑️ Cleaned up temp file: ${this.fastaFile.tempFilePath}`);
+                        console.log(`Cleaned up temp file: ${this.fastaFile.tempFilePath}`);
                     }
                 });
                 this.fastaFile.tempFilePath = null;
@@ -551,7 +551,7 @@ class ChromosomeSplitterPython {
             // Store temp directory for later cleanup (don't auto-delete)
             if (tempDir) {
                 this.chromosomeData.tempDir = tempDir;
-                console.log(`📁 Temp directory stored for manual cleanup: ${tempDir}`);
+                console.log(`Temp directory stored for manual cleanup: ${tempDir}`);
                 
                 // Add cleanup on page unload
                 window.addEventListener('beforeunload', () => {
@@ -563,7 +563,7 @@ class ChromosomeSplitterPython {
             this.showNotification(`Successfully split ${chromosomes.length} chromosomes`, 'success');
 
         } catch (error) {
-            console.error('❌ Split error:', error);
+            console.error('Split error:', error);
             this.hideLoadingOverlay();
             this.showNotification(`Failed to split chromosomes: ${error.message}`, 'error');
         }
@@ -613,7 +613,7 @@ class ChromosomeSplitterPython {
             const path = require('path');
             const os = require('os');
             
-            console.log('🧬 Starting streaming FASTA parser with direct-to-disk writing...');
+            console.log('Starting streaming FASTA parser with direct-to-disk writing...');
             
             const chromosomes = [];
             let currentChromosome = null;
@@ -625,7 +625,7 @@ class ChromosomeSplitterPython {
             // Create temp directory for chromosome files
             const tempDir = path.join(os.tmpdir(), `chromosome_split_${Date.now()}`);
             fs.mkdirSync(tempDir, { recursive: true });
-            console.log(`📁 Created temp directory: ${tempDir}`);
+            console.log(`Created temp directory: ${tempDir}`);
             
             // Create read stream
             const fileStream = fs.createReadStream(filePath, { encoding: 'utf8' });
@@ -646,7 +646,7 @@ class ChromosomeSplitterPython {
                         filePath: path.join(tempDir, `${currentChromosome.replace(/[<>:"/\\|?*]/g, '_')}.fasta`),
                         isLargeFile: true
                     });
-                    console.log(`✅ Wrote chromosome: ${currentChromosome} (${currentSequenceLength.toLocaleString()} bp) to disk`);
+                    console.log(`Wrote chromosome: ${currentChromosome} (${currentSequenceLength.toLocaleString()} bp) to disk`);
                     chromosomeCount++;
                 }
             };
@@ -656,7 +656,7 @@ class ChromosomeSplitterPython {
                 
                 // Show progress every 100k lines
                 if (lineCount % 100000 === 0) {
-                    console.log(`📖 Processed ${lineCount.toLocaleString()} lines, ${chromosomeCount} chromosomes...`);
+                    console.log(`Processed ${lineCount.toLocaleString()} lines, ${chromosomeCount} chromosomes...`);
                 }
                 
                 line = line.trim();
@@ -688,8 +688,8 @@ class ChromosomeSplitterPython {
                 // Finish last chromosome
                 finishCurrentChromosome();
                 
-                console.log(`🎉 Streaming parser completed! Found ${chromosomes.length} chromosomes from ${lineCount.toLocaleString()} lines`);
-                console.log(`📁 All chromosomes written to: ${tempDir}`);
+                console.log(`Streaming parser completed! Found ${chromosomes.length} chromosomes from ${lineCount.toLocaleString()} lines`);
+                console.log(`All chromosomes written to: ${tempDir}`);
                 
                 // Return object with chromosomes and temp directory info
                 resolve({
@@ -699,14 +699,14 @@ class ChromosomeSplitterPython {
             });
             
             rl.on('error', (error) => {
-                console.error('❌ Streaming parser error:', error);
+                console.error('Streaming parser error:', error);
                 // Clean up temp directory on error
                 fs.rmSync(tempDir, { recursive: true, force: true });
                 reject(new Error(`Failed to parse FASTA file: ${error.message}`));
             });
             
             fileStream.on('error', (error) => {
-                console.error('❌ File stream error:', error);
+                console.error('File stream error wtf?:', error);
                 // Clean up temp directory on error
                 fs.rmSync(tempDir, { recursive: true, force: true });
                 reject(new Error(`Failed to read FASTA file: ${error.message}`));
@@ -715,15 +715,15 @@ class ChromosomeSplitterPython {
     }
 
     displayResults(chromosomes) {
-        console.log(`🖥️ displayResults called with ${chromosomes.length} chromosomes`);
+        console.log(`displayResults called with ${chromosomes.length} chromosomes`);
         
         const resultsContainer = document.getElementById('chromosome-results');
         if (!resultsContainer) {
-            console.error('❌ Results container not found!');
+            console.error('Results container not found!');
             return;
         }
 
-        console.log('📋 Building HTML for chromosomes...');
+        console.log('Building HTML for chromosomes...');
         resultsContainer.innerHTML = `
             <div class="bg-slate-800 border border-green-500/30 rounded-xl p-6">
                 <h3 class="text-xl font-semibold text-white mb-4">Split Results</h3>
@@ -752,19 +752,19 @@ class ChromosomeSplitterPython {
             </div>
         `;
 
-        console.log('✅ HTML built and inserted into DOM');
+        console.log('HTML built and inserted into DOM');
         
         // Show the results container
         resultsContainer.classList.remove('hidden');
-        console.log('✅ Results container made visible');
+        console.log('Results container made visible');
         
         // Re-bind download all button
         const downloadAllBtn = document.getElementById('download-all-btn');
         if (downloadAllBtn) {
             downloadAllBtn.addEventListener('click', () => this.downloadAllChromosomes());
-            console.log('✅ Download all button re-bound');
+            console.log('Download all button re-bound');
         } else {
-            console.error('❌ Download all button not found after HTML insertion');
+            console.error('Download all button not found after HTML insertion');
         }
     }
 
@@ -792,7 +792,7 @@ class ChromosomeSplitterPython {
             this.downloadFile(content, filename);
             
         } catch (error) {
-            console.error('❌ Download error:', error);
+            console.error('Download error:', error);
             this.showNotification(`Failed to download chromosome: ${error.message}`, 'error');
         }
     }
@@ -822,7 +822,7 @@ class ChromosomeSplitterPython {
             this.showNotification(`Started download of ${this.chromosomeData.length} chromosome files`, 'success');
 
         } catch (error) {
-            console.error('❌ Download error:', error);
+            console.error('Download error:', error);
             this.hideLoadingOverlay();
             this.showNotification(`Failed to download chromosomes: ${error.message}`, 'error');
         }

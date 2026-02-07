@@ -15,7 +15,7 @@ class PythonGeneExtractor {
     init() {
         this.bindEvents();
         this.setupFileUploads();
-        console.log('🧬 Python Gene Extractor initialized');
+        console.log('Python Gene Extractor initialized');
     }
 
     bindEvents() {
@@ -306,7 +306,7 @@ class PythonGeneExtractor {
                             const tempSeqFile = path.join(tempDir, `seq_${Date.now()}.tmp`);
                             fs.writeFileSync(tempSeqFile, sequenceData);
                             args.push('--sequence-file', tempSeqFile);
-                            console.log('📝 Created temp file for long sequence data:', tempSeqFile);
+                            console.log('Created temp file for long sequence data:', tempSeqFile);
                         } else {
                             args.push('--sequence-data', sequenceData);
                         }
@@ -328,7 +328,7 @@ class PythonGeneExtractor {
                             const tempGffFile = path.join(tempDir, `gff_${Date.now()}.tmp`);
                             fs.writeFileSync(tempGffFile, gffData);
                             args.push('--gff-file', tempGffFile);
-                            console.log('📝 Created temp file for long GFF data:', tempGffFile);
+                            console.log('Created temp file for long GFF data:', tempGffFile);
                         } else {
                             args.push('--gff-data', gffData);
                         }
@@ -348,15 +348,15 @@ class PythonGeneExtractor {
                     args.push('--load-all');
                 }
 
-                console.log('🐍 Calling Python Gene Extractor:', scriptPath);
-                console.log('🐍 Arguments:', args);
-                console.log('🐍 Command line length:', JSON.stringify(args).length);
+                console.log('Calling Python Gene Extractor:', scriptPath);
+                console.log('Arguments:', args);
+                console.log('Command line length:', JSON.stringify(args).length);
                 
                 // Check for potential ENAMETOOLONG issues
                 const fullCommand = `python ${args.join(' ')}`;
-                console.log('🐍 Full command length:', fullCommand.length);
+                console.log('Full command length:', fullCommand.length);
                 if (fullCommand.length > 8000) {
-                    console.warn('⚠️ Command line is very long, may cause ENAMETOOLONG error');
+                    console.warn('Command line is very long, may cause ENAMETOOLONG error');
                 }
 
                 // Spawn Python process
@@ -367,7 +367,7 @@ class PythonGeneExtractor {
 
                 // Handle spawn errors (like ENAMETOOLONG)
                 pythonProcess.on('error', (error) => {
-                    console.error('❌ Python process spawn error:', error);
+                    console.error('Python process spawn error:', error);
                     this.cleanupTempFiles(sequenceData, gffData);
                     reject(new Error(`Script execution error: ${error.code || error.message}`));
                 });
@@ -382,7 +382,7 @@ class PythonGeneExtractor {
                     
                     // Check if we're exceeding safe buffer limits
                     if (stdoutSize > MAX_BUFFER_SIZE) {
-                        console.error('❌ Output too large, terminating process');
+                        console.error('Output too large, terminating process');
                         pythonProcess.kill('SIGTERM');
                         reject(new Error(`Output too large (>${MAX_BUFFER_SIZE / (1024*1024)}MB). The genome file produced too much data. Try using a smaller file or enable gene filtering.`));
                         return;
@@ -397,13 +397,13 @@ class PythonGeneExtractor {
                     
                     // Show progress from stderr in real-time
                     if (stderrChunk.includes('Processed') || stderrChunk.includes('Loaded sequence') || stderrChunk.includes('Found')) {
-                        console.log('🧬 Progress:', stderrChunk.trim());
+                        console.log('Progress:', stderrChunk.trim());
                     }
                 });
 
                 pythonProcess.on('close', (code) => {
-                    console.log(`🐍 Python process exited with code: ${code}`);
-                    console.log('🐍 Stderr output:', stderr);
+                    console.log(`Python process exited with code: ${code}`);
+                    console.log('Stdr output:', stderr);
                     
                     // Cleanup temporary files
                     this.cleanupTempFiles(sequenceData, gffData);
@@ -418,30 +418,30 @@ class PythonGeneExtractor {
                                 return;
                             }
                             
-                            console.log(`🐍 Output size: ${(stdout.length / (1024*1024)).toFixed(2)}MB`);
+                            console.log(`Output size: ${(stdout.length / (1024*1024)).toFixed(2)}MB`);
                             
                             const result = JSON.parse(stdout);
-                            console.log('✅ Python result parsed successfully');
-                            console.log(`✅ Found ${result.genes?.length || 0} genes`);
+                            console.log('Python result parsed successfully');
+                            console.log(`Found ${result.genes?.length || 0} genes`);
                             resolve(result);
                         } catch (parseError) {
-                            console.error('❌ Failed to parse Python output:', parseError);
+                            console.error(' Failed to fuck:', parseError);
                             reject(new Error(`Failed to parse Python output: ${parseError.message}`));
                         }
                     } else {
-                        console.error('❌ Python script failed:', stderr);
+                        console.error('Python script failed:', stderr);
                         const stdout = Buffer.concat(stdoutChunks).toString();
                         reject(new Error(`Python script failed (exit code ${code}): ${stderr || stdout || 'Unknown error'}`));
                     }
                 });
 
                 pythonProcess.on('error', (error) => {
-                    console.error('❌ Failed to start Python process:', error);
+                    console.error('Failed to start Python process:', error);
                     reject(new Error(`Failed to start Python process: ${error.message}`));
                 });
 
             } catch (error) {
-                console.error('❌ Error in callPythonScript:', error);
+                console.error('Error in callPythonScript:', error);
                 reject(new Error(`Script execution error: ${error.message}`));
             }
         });
@@ -590,14 +590,14 @@ class PythonGeneExtractor {
         
         if (prevBtn) {
             prevBtn.addEventListener('click', () => {
-                console.log('🔙 Previous button clicked');
+                console.log('Previous button clicked');
                 this.goToPage(this.currentPage - 1);
             });
         }
         
         if (nextBtn) {
             nextBtn.addEventListener('click', () => {
-                console.log('🔜 Next button clicked');
+                console.log('Next button clicked');
                 this.goToPage(this.currentPage + 1);
             });
         }
@@ -606,7 +606,7 @@ class PythonGeneExtractor {
         controls.querySelectorAll('.page-number-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const page = parseInt(e.target.dataset.page);
-                console.log(`🔢 Page number ${page} button clicked`);
+                console.log(`Page number ${page} button clicked`);
                 this.goToPage(page);
             });
         });
@@ -647,16 +647,16 @@ class PythonGeneExtractor {
     }
 
     goToPage(page) {
-        console.log(`🔄 goToPage called with page: ${page}`);
+        console.log(`goToPage called with page: ${page}`);
         
         // Since all genes are loaded in memory, just do client-side pagination
         const totalGenes = this.extractedGenes.length;
         const totalPages = Math.ceil(totalGenes / this.genesPerPage);
         
-        console.log(`📊 Total genes: ${totalGenes}, Total pages: ${totalPages}, Current page: ${this.currentPage}`);
+        console.log(`Total genes: ${totalGenes}, Total pages: ${totalPages}, Current page: ${this.currentPage}`);
         
         if (page < 1 || page > totalPages) {
-            console.log(`❌ Invalid page: ${page} (valid range: 1-${totalPages})`);
+            console.log(`Wongpage: ${page} (valid range: 1-${totalPages})`);
             return;
         }
         
@@ -1142,7 +1142,7 @@ class PythonGeneExtractor {
             const tempFilePath = path.join(tempDir, tempFileName);
             
             console.log(`Creating temporary copy: ${tempFilePath}`);
-            console.log(`NOTE: This creates an EXACT COPY of your file (no cuts/chunks)`);
+            console.log(`This creates an EXACT COPY of your file (no cuts/chunks)`);
             console.log(`Python will then read the ENTIRE temp file into RAM for complete analysis`);
             
             // Stream file to disk
@@ -1152,7 +1152,7 @@ class PythonGeneExtractor {
             resolve(`TEMP_FILE:${tempFilePath}`);
             
         } catch (error) {
-            console.error('❌ Failed to stream large file:', error);
+            console.error('Failed to stream large file:', error);
             reject(new Error(`Failed to process large file: ${error.message}`));
         }
     }
@@ -1226,7 +1226,7 @@ class PythonGeneExtractor {
                 }
             }
         } catch (error) {
-            console.warn('⚠️ Failed to cleanup temp files:', error.message);
+            console.warn('Failed to cleanup temp file ok:', error.message);
         }
     }
 

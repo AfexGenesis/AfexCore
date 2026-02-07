@@ -60,14 +60,14 @@ class AfexGenesisApp {
         
         // Show selected page
         const selectedPage = document.getElementById(`${pageId}-page`);
-        console.log(`🔧 Looking for page: ${pageId}-page`);
-        console.log(`🔧 Page found:`, !!selectedPage);
+        console.log(`Looking for page: ${pageId}-page`);
+        console.log(`Page found:`, !!selectedPage);
         if (selectedPage) {
             selectedPage.classList.add('active');
             selectedPage.style.display = 'block';
-            console.log(`✅ Showing page: ${pageId}-page`);
+            console.log(`Showing page: ${pageId}-page`);
         } else {
-            console.error(`❌ Page not found: ${pageId}-page`);
+            console.error(`Page not found: ${pageId}-page`);
         }
         
         // Control visibility of homepage-only elements
@@ -75,34 +75,34 @@ class AfexGenesisApp {
         
         // Load projects when switching to research page
         if (pageId === 'research') {
-            console.log('📊 Switching to research page, loading projects...');
+            console.log('Switching to research page, loading projects...');
             this.loadProjects();
         }
         
         // Load purchase orders when switching to invoice generator page
         if (pageId === 'invoice-generator') {
-            console.log('📄 Switching to invoice generator page, loading purchase orders...');
+            console.log('Switching to invoice generator page, loading purchase orders...');
             // Call the function from invoice.js
             if (typeof loadPurchaseOrdersFromBackend === 'function') {
                 loadPurchaseOrdersFromBackend();
             } else {
-                console.error('❌ loadPurchaseOrdersFromBackend function not found');
+                console.error('loadPurchaseOrdersFromBackend function not found');
             }
         }
         
         // Initialize ExpenseManager when switching to expense tracker page
         if (pageId === 'expense-tracker') {
-            console.log('💰 Switching to expense tracker page, initializing ExpenseManager...');
+            console.log('Switching to expense tracker page, initializing ExpenseManager...');
             // Call the function from expense-manager.js
             if (typeof initializeExpenseManagerForPage === 'function') {
                 initializeExpenseManagerForPage();
             } else {
-                console.error('❌ initializeExpenseManagerForPage function not found');
+                console.error('initializeExpenseManagerForPage function not found');
             }
         }
         
         this.currentPage = pageId;
-        console.log(`📄 Navigated to: ${pageId.toUpperCase()}`);
+        console.log(`Navigated to: ${pageId.toUpperCase()}`);
     }
     
     toggleHomepageElements(show) {
@@ -116,7 +116,7 @@ class AfexGenesisApp {
         if (chatboxContainer) chatboxContainer.style.display = display;
         if (financialGridContainer) financialGridContainer.style.display = display;
         
-        console.log(`🏠 Homepage elements ${show ? 'shown' : 'hidden'}`);
+        console.log(`Homepage elements ${show ? 'shown' : 'hidden'}`);
     }
 
 
@@ -361,7 +361,7 @@ class AfexGenesisApp {
             card.style.display = matches ? 'block' : 'none';
         });
         
-        console.log(`🔍 Genetic search: "${query}" - ${document.querySelectorAll('#home-page .grid > div[style*="block"]').length} results found`);
+        console.log(`Genetic search: "${query}" - ${document.querySelectorAll('#home-page .grid > div[style*="block"]').length} results found`);
     }
 
     // ===== RESEARCH PAGE SEARCH FUNCTIONALITY =====
@@ -435,7 +435,7 @@ class AfexGenesisApp {
             card.style.display = matches ? 'block' : 'none';
         });
         
-        console.log(`🔍 Research search: "${query}" - ${document.querySelectorAll('#research-projects-grid > div[style*="block"]').length} results found`);
+        console.log(`Research search: "${query}" - ${document.querySelectorAll('#research-projects-grid > div[style*="block"]').length} results found`);
     }
 
     // ===== PROJECT CREATION FUNCTIONALITY =====
@@ -502,13 +502,13 @@ class AfexGenesisApp {
             document.getElementById('project-name').focus();
         }, 100);
         
-        console.log('📝 Project creation modal opened');
+        console.log('Project creation modal opened');
     }
     
     closeProjectModal() {
         const projectModal = document.getElementById('project-modal');
         projectModal.classList.add('hidden');
-        console.log('❌ Project creation modal closed');
+        console.log('Project creation modal closed');
     }
     
     updateDateTime() {
@@ -527,17 +527,17 @@ class AfexGenesisApp {
     }
     
     async createNewProject() {
-        console.log('🆕 Creating new project...');
+        console.log('Creating new project...');
         
         const projectName = document.getElementById('project-name').value.trim();
         const projectOwner = document.getElementById('project-owner').value.trim();
         const projectDescription = document.getElementById('project-description').value.trim();
         const projectDateTime = document.getElementById('project-datetime').value;
         
-        console.log('🆕 Project details:', { projectName, projectOwner, projectDescription, projectDateTime });
+        console.log('Project details:', { projectName, projectOwner, projectDescription, projectDateTime });
         
         if (!projectName || !projectOwner) {
-            console.error('❌ Missing required fields');
+            console.error('Missing required fields');
             alert('Please fill in all required fields.');
             return;
         }
@@ -585,14 +585,14 @@ class AfexGenesisApp {
                 this.closeProjectModal();
                 
                 // Show success message
-                console.log(`✅ New project created: "${projectName}" by ${projectOwner}`);
+                console.log(`New project created: "${projectName}" by ${projectOwner}`);
                 this.showNotification(`Project "${projectName}" created successfully!`, 'success');
             } else {
-                console.error('❌ Failed to create project:', result.error);
+                console.error('Failed to create project:', result.error);
                 this.showNotification(`Failed to create project: ${result.error}`, 'error');
             }
         } catch (error) {
-            console.error('❌ Error creating project:', error);
+            console.error('Error creating project:', error);
             this.showNotification('Failed to create project. Please make sure the API server is running.', 'error');
         }
     }
@@ -819,14 +819,14 @@ class AfexGenesisApp {
                     });
                 });
                 
-                console.log(`✅ Project status updated to: ${newStatus}`);
+                console.log(`Project status updated to: ${newStatus}`);
                 this.showNotification(`Project status updated to "${newStatus}"`, 'success');
             } else {
-                console.error('❌ Failed to update project status:', result.error);
+                console.error('Failed to update project status:', result.error);
                 this.showNotification(`Failed to update status: ${result.error}`, 'error');
             }
         } catch (error) {
-            console.error('❌ Error updating project status:', error);
+            console.error('Error updating project status:', error);
             this.showNotification('Failed to update status. Please make sure the API server is running.', 'error');
         }
     }
@@ -864,14 +864,14 @@ class AfexGenesisApp {
             confirmationInput.focus();
         }, 100);
         
-        console.log(`🗑️ Delete modal opened for project: ${project.name}`);
+        console.log(`Delete modal opened for project: ${project.name}`);
     }
     
     closeDeleteModal() {
         const deleteModal = document.getElementById('delete-modal');
         deleteModal.classList.add('hidden');
         this.projectToDelete = null;
-        console.log('❌ Delete modal closed');
+        console.log('Delete modal closed');
     }
     
     async deleteProject() {
@@ -901,14 +901,14 @@ class AfexGenesisApp {
                 this.closeDeleteModal();
                 
                 // Show success message
-                console.log(`✅ Project deleted: ${projectName}`);
+                console.log(`Project deleted: ${projectName}`);
                 this.showNotification(`Project "${projectName}" deleted successfully!`, 'success');
             } else {
-                console.error('❌ Failed to delete project:', result.error);
+                console.error('Failed to delete project:', result.error);
                 this.showNotification(`Failed to delete project: ${result.error}`, 'error');
             }
         } catch (error) {
-            console.error('❌ Error deleting project:', error);
+            console.error('Error deleting project:', error);
             
             // Check if the project was actually deleted by trying to remove it from DOM
             const projectCard = document.querySelector(`[data-project-id="${this.projectToDelete.id}"]`);
@@ -918,7 +918,7 @@ class AfexGenesisApp {
             } else {
                 // Project card is gone, so deletion might have succeeded despite the error
                 this.closeDeleteModal();
-                console.log(`⚠️ Project "${projectName}" may have been deleted despite network error`);
+                console.log(`Project "${projectName}" may have been deleted despite network error`);
                 this.showNotification(`Project "${projectName}" deleted (with network error)`, 'success');
             }
         }
@@ -1202,11 +1202,11 @@ class AfexGenesisApp {
         if (page === 'expense-tracker') {
             // Initialize expense manager after a short delay to ensure DOM is ready
             setTimeout(() => {
-                console.log('💰 Initializing ExpenseManager for expense tracker page...');
+                console.log('Initializing ExpenseManager for expense tracker page...');
                 if (typeof initializeExpenseManagerForPage === 'function') {
                     initializeExpenseManagerForPage();
                 } else {
-                    console.error('❌ initializeExpenseManagerForPage function not found');
+                    console.error('initializeExpenseManagerForPage function not found');
                 }
                 
                 // Also try the old function name for backward compatibility
@@ -1337,7 +1337,7 @@ class AfexGenesisApp {
         // Update URL without page reload
         window.history.pushState({page: toolName}, '', `#${toolName}`);
         
-        console.log(`🧬 Navigating to genetic tool: ${toolName}`);
+        console.log(`Navigating to genetic tool: ${toolName}`);
     }
     
     showGeneticToolPage(toolName) {
@@ -1348,14 +1348,14 @@ class AfexGenesisApp {
         const pageContent = document.getElementById(`${toolName}-page`);
         
         if (!pageContent) {
-            console.error(`❌ Genetic tool page not found: ${toolName}-page`);
+            console.error(`Genetic tool page not found: ${toolName}-page`);
             return;
         }
         
         pageContent.style.display = 'block';
         pageContent.classList.add('active');
         
-        console.log(`✅ Showing genetic tool page: ${toolName}-page`);
+        console.log(`Showing genetic tool page: ${toolName}-page`);
     }
 
 
@@ -1371,7 +1371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     // Performance monitoring
-    console.log('⚡ Performance Metrics:', {
+    console.log('Performance Metrics:', {
         loadTime: performance.now(),
         memory: performance.memory ? performance.memory.usedJSHeapSize : 'N/A',
         timestamp: new Date().toISOString()
@@ -1379,19 +1379,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Welcome message
     console.log(`
-    🧬 ===============================================
-    🦕     AFEXGENESIS™ LABORATORY SYSTEM
-    🔬         Genetic Engineering Interface
-    🧪              System Status: ONLINE
     ===============================================
-    🏠 Press Ctrl+1 for Home
-    🧬 Press Ctrl+2 for Genetic Lab  
-    🔬 Press Ctrl+3 for Research
-    🌐 Press Ctrl+4 for Browser
-    🤖 Press Ctrl+5 for ChatGPT
-    💎 Press Ctrl+6 for Gemini
-    🧠 Press Ctrl+7 for Custom AI
-    ⌨️  Press ESC to close overlays
+                        AFEXGENESIS™ LABORATORY SYSTEM
+                                Genetic Engineering Interface
+                                    System Status: ONLINE
     ===============================================
+
     `);
 });
