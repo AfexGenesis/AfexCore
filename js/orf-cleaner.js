@@ -808,15 +808,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const { spawn } = require('child_process');
             const path = require('path');
             
-            const scriptPath = path.join(__dirname, 'assets', 'orf-cleaner.py');
-            const args = [operation, sequence];
-            
-            if (options) {
-                args.push(options);
-            }
+            const scriptPath = path.join(__dirname, '..', 'assets', 'orf-cleaner.py');
+            const args = [scriptPath];
             
             return new Promise((resolve, reject) => {
-                const python = spawn('python', [scriptPath, ...args]);
+                const python = spawn('python', args);
                 let output = '';
                 let error = '';
                 
@@ -827,6 +823,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 python.stderr.on('data', (data) => {
                     error += data.toString();
                 });
+                
+                // Send input data via stdin as JSON
+                const inputData = {
+                    operation: operation,
+                    sequence: sequence
+                };
+                
+                if (options) {
+                    try {
+                        inputData.options = typeof options === 'string' ? JSON.parse(options) : options;
+                    } catch (e) {
+                        // If options is already an object or JSON string, include as is
+                        inputData.options = options;
+                    }
+                }
+                
+                try {
+                    python.stdin.write(JSON.stringify(inputData));
+                    python.stdin.end();
+                } catch (writeError) {
+                    reject(new Error('Failed to write to Python stdin: ' + writeError.message));
+                    return;
+                }
                 
                 python.on('close', (code) => {
                     if (code === 0) {

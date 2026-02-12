@@ -207,8 +207,8 @@ class ReverseTranscriber:
 
 def main():
     parser = argparse.ArgumentParser(description='AFEX Genesis™ Reverse Transcriber')
-    parser.add_argument('--sequence', required=True, help='Input sequence')
-    parser.add_argument('--input-type', required=True, choices=['mrna', 'trna', 'protein'], 
+    parser.add_argument('--sequence', help='Input sequence')
+    parser.add_argument('--input-type', choices=['mrna', 'trna', 'protein'], 
                        help='Type of input sequence')
     parser.add_argument('--codon-usage', default='optimal', choices=['optimal', 'first'],
                        help='Codon usage preference for protein reverse translation')
@@ -219,22 +219,63 @@ def main():
     
     args = parser.parse_args()
     
+    # Get inputs from arguments or stdin
+    sequence = args.sequence
+    input_type = args.input_type
+    codon_usage = args.codon_usage
+    output_types_arg = args.output_types
+    file_content = args.file_content
+    file_format = args.file_format
+    
+    # If no sequence from args, try stdin
+    if not sequence or not input_type:
+        try:
+            input_data = sys.stdin.read()
+            if input_data:
+                data = json.loads(input_data)
+                sequence = sequence or data.get('sequence', '')
+                input_type = input_type or data.get('input_type', '')
+                codon_usage = data.get('codon_usage', codon_usage)
+                output_types_arg = data.get('output_types', output_types_arg)
+                file_content = data.get('file_content', file_content)
+                file_format = data.get('file_format', file_format)
+        except json.JSONDecodeError:
+            error_output = {
+                'success': False,
+                'error': 'Failed to parse JSON from stdin'
+            }
+            print(json.dumps(error_output))
+            sys.exit(1)
+        except Exception as e:
+            error_output = {
+                'success': False,
+                'error': f'Error reading from stdin: {str(e)}'
+            }
+            print(json.dumps(error_output))
+            sys.exit(1)
+    
+    if not sequence or not input_type:
+        error_output = {
+            'success': False,
+            'error': 'Sequence and input type are required'
+        }
+        print(json.dumps(error_output))
+        sys.exit(1)
+    
     try:
         transcriber = ReverseTranscriber()
         
         # Handle file input if provided
-        if args.file_content and args.file_format:
-            sequence = transcriber.parse_file_content(args.file_content, args.file_format)
+        if file_content and file_format:
+            sequence = transcriber.parse_file_content(file_content, file_format)
             if not sequence:
                 raise ValueError("No valid sequence found in file")
-        else:
-            sequence = args.sequence
         
         # Perform reverse transcription
-        result = transcriber.reverse_transcribe(sequence, args.input_type, args.codon_usage)
+        result = transcriber.reverse_transcribe(sequence, input_type, codon_usage)
         
         # Prepare output based on requested types
-        output_types = [t.strip() for t in args.output_types.split(',')]
+        output_types = [t.strip() for t in output_types_arg.split(',')]
         results = {}
         
         if 'dna' in output_types:

@@ -246,7 +246,7 @@ class PythonGeneComparator {
             const path = require('path');
 
             // Prepare arguments for Python script (without sequences)
-            const scriptPath = path.join(__dirname, 'assets', 'gene-comparator.py');
+            const scriptPath = path.join(__dirname, '..', 'assets', 'gene-comparator.py');
             const args = [
                 scriptPath,
                 '--query', 'STDIN_QUERY',

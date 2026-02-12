@@ -332,12 +332,8 @@ class CodonFinderPython {
             const path = require('path');
 
             // Prepare arguments for Python script
-            const scriptPath = path.join(__dirname, 'assets', 'codon-finder.py');
-            const args = [
-                scriptPath,
-                '--sequence', sequence,
-                '--amino-acid', aminoAcid
-            ];
+            const scriptPath = path.join(__dirname, '..', 'assets', 'codon-finder.py');
+            const args = [scriptPath];
 
             console.log('Calling Codon Finder:', scriptPath);
 
@@ -357,6 +353,21 @@ class CodonFinderPython {
             pythonProcess.stderr.on('data', (data) => {
                 stderr += data.toString();
             });
+
+            // Send input data via stdin as JSON
+            const inputData = {
+                sequence: sequence,
+                amino_acid: aminoAcid
+            };
+
+            try {
+                pythonProcess.stdin.write(JSON.stringify(inputData));
+                pythonProcess.stdin.end();
+            } catch (error) {
+                console.error('Failed to write to Python stdin:', error);
+                reject(new Error(`Failed to send data to Python: ${error.message}`));
+                return;
+            }
 
             pythonProcess.on('close', (code) => {
                 console.log(`Python process exited with code: ${code}`);

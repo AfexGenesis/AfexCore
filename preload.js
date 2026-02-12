@@ -23,4 +23,4 @@ window.electronAPI = {
 // Security: Freeze the API to prevent tampering
 Object.freeze(window.electronAPI);
 
-console.log('🔒 Preload script loaded - Secure API bridge established');
+console.log('Preload script loaded - Secure API bridge established');

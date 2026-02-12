@@ -280,40 +280,10 @@ class CodonOptimizerPython {
             const path = require('path');
 
             // Prepare arguments for Python script
-            const scriptPath = path.join(__dirname, 'assets', 'codon-optimizer.py');
-            const args = [
-                scriptPath,
-                '--sequence', sequence
-            ];
-
-            // Add GC target
-            if (gcTarget && gcTarget !== '') {
-                if (gcTarget === 'custom' && customGC) {
-                    args.push('--gc-target', 'custom');
-                    args.push('--custom-gc', customGC.toString());
-                } else {
-                    args.push('--gc-target', gcTarget);
-                }
-            }
-
-            // Add organism
-            if (organism && organism !== '') {
-                args.push('--organism', organism);
-            }
-
-            // Add advanced options
-            if (avoidRareCodons) {
-                args.push('--avoid-rare-codons');
-            }
-            if (removeRestrictionSites) {
-                args.push('--remove-restriction-sites');
-            }
-            if (optimizeFolding) {
-                args.push('--optimize-folding');
-            }
+            const scriptPath = path.join(__dirname, '..', 'assets', 'codon-optimizer.py');
+            const args = [scriptPath];
 
             console.log('Calling Codon Optimizer:', scriptPath);
-            console.log('Full command:', 'python', args.join(' '));
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -331,6 +301,26 @@ class CodonOptimizerPython {
             pythonProcess.stderr.on('data', (data) => {
                 stderr += data.toString();
             });
+
+            // Send input data via stdin as JSON
+            const inputData = {
+                sequence: sequence,
+                gc_target: gcTarget,
+                custom_gc: customGC,
+                organism: organism,
+                avoid_rare_codons: avoidRareCodons,
+                remove_restriction_sites: removeRestrictionSites,
+                optimize_folding: optimizeFolding
+            };
+
+            try {
+                pythonProcess.stdin.write(JSON.stringify(inputData));
+                pythonProcess.stdin.end();
+            } catch (error) {
+                console.error('Failed to write to Python stdin:', error);
+                reject(new Error(`Failed to send data to Python: ${error.message}`));
+                return;
+            }
 
             pythonProcess.on('close', (code) => {
                 console.log(`Python process exited with code: ${code}`);

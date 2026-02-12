@@ -663,19 +663,38 @@ def parse_genbank(content):
     return sequence
 
 def main():
-    """Main function to handle command line arguments"""
+    """Main function to handle command line arguments or stdin input"""
     try:
-        if len(sys.argv) < 2:
-            print(json.dumps({
-                'success': False,
-                'error': 'No operation specified'
-            }))
-            return
+        # First, try to read from stdin if available
+        operation = None
+        sequence = None
+        options = {}
         
-        operation = sys.argv[1]
+        # Check if we have stdin data
+        if not sys.stdin.isatty():
+            try:
+                input_data = sys.stdin.read()
+                if input_data:
+                    data = json.loads(input_data)
+                    operation = data.get('operation')
+                    sequence = data.get('sequence')
+                    options = data.get('options', {})
+            except json.JSONDecodeError:
+                pass  # Fall through to argv parsing
+            except Exception:
+                pass  # Fall through to argv parsing
         
-        if operation == 'load':
-            # Load and analyze sequence
+        # If no stdin data, try command line arguments
+        if not operation or not sequence:
+            if len(sys.argv) < 2:
+                print(json.dumps({
+                    'success': False,
+                    'error': 'No operation specified'
+                }))
+                return
+            
+            operation = sys.argv[1]
+            
             if len(sys.argv) < 3:
                 print(json.dumps({
                     'success': False,
@@ -683,18 +702,26 @@ def main():
                 }))
                 return
             
-            sequence_input = sys.argv[2]
+            sequence = sys.argv[2]
             
+            if len(sys.argv) > 3:
+                try:
+                    options = json.loads(sys.argv[3])
+                except:
+                    pass
+        
+        if operation == 'load':
+            # Load and analyze sequence
             # Check if it's a file format or raw sequence
-            if sequence_input.startswith('>'):
+            if sequence.startswith('>'):
                 # FASTA format
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
                 # GenBank format
-                sequence = parse_genbank(sequence_input)
+                sequence = parse_genbank(sequence)
             else:
                 # Raw sequence
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Analyze the sequence
             result = analyze_sequence(sequence)
@@ -702,17 +729,7 @@ def main():
             
         elif operation == 'analyze':
             # Analyze ORFs (preview mode - find issues but don't fix them)
-            if len(sys.argv) < 3:
-                print(json.dumps({
-                    'success': False,
-                    'error': 'No sequence provided for ORF analysis'
-                }))
-                return
-            
-            sequence_input = sys.argv[2]
-            
-            # Parse options if provided
-            options = {
+            parsed_options = {
                 'min_orf_length': 30,
                 'optimize_codons': True,
                 'target_organism': 'e-coli',
@@ -720,38 +737,24 @@ def main():
                 'remove_internal_stops': True
             }
             
-            if len(sys.argv) > 3:
-                try:
-                    parsed_options = json.loads(sys.argv[3])
-                    options.update(parsed_options)
-                except Exception as e:
-                    pass  # Use defaults if parsing fails
+            if options:
+                parsed_options.update(options)
             
             # Parse sequence
-            if sequence_input.startswith('>'):
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
-                sequence = parse_genbank(sequence_input)
+            if sequence.startswith('>'):
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
+                sequence = parse_genbank(sequence)
             else:
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Preview ORF issues (don't actually fix them)
-            preview_result = preview_orf_issues(sequence, options)
+            preview_result = preview_orf_issues(sequence, parsed_options)
             print(json.dumps(preview_result))
             
         elif operation == 'optimize':
             # Actually optimize and clean ORFs
-            if len(sys.argv) < 3:
-                print(json.dumps({
-                    'success': False,
-                    'error': 'No sequence provided for ORF optimization'
-                }))
-                return
-            
-            sequence_input = sys.argv[2]
-            
-            # Parse options if provided
-            options = {
+            parsed_options = {
                 'min_orf_length': 30,
                 'optimize_codons': True,
                 'target_organism': 'e-coli',
@@ -759,22 +762,19 @@ def main():
                 'remove_internal_stops': True
             }
             
-            if len(sys.argv) > 3:
-                try:
-                    options.update(json.loads(sys.argv[3]))
-                except:
-                    pass  # Use defaults if parsing fails
+            if options:
+                parsed_options.update(options)
             
             # Parse sequence
-            if sequence_input.startswith('>'):
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
-                sequence = parse_genbank(sequence_input)
+            if sequence.startswith('>'):
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
+                sequence = parse_genbank(sequence)
             else:
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Clean ORFs
-            cleaning_result = clean_orfs(sequence, options)
+            cleaning_result = clean_orfs(sequence, parsed_options)
             
             if cleaning_result['success']:
                 # Analyze cleaned sequence
@@ -792,7 +792,7 @@ def main():
                         'optimization_log': cleaning_result['optimization_log'],
                         'statistics': cleaning_result['statistics'],
                         'sequence_analysis': cleaned_analysis['data'],
-                        'options_used': options
+                        'options_used': parsed_options
                     }
                     
                     print(json.dumps(final_result))

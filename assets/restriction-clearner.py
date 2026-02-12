@@ -582,19 +582,40 @@ def targeted_site_scan(sequence, enzymes_to_scan):
     }
 
 def main():
-    """Main function to handle command line arguments"""
+    """Main function to handle command line arguments or stdin input"""
     try:
-        if len(sys.argv) < 2:
-            print(json.dumps({
-                'success': False,
-                'error': 'No operation specified'
-            }))
-            return
+        # First, try to read from stdin if available
+        operation = None
+        sequence = None
+        enzyme_selection = None
+        options = {}
         
-        operation = sys.argv[1]
+        # Check if we have stdin data
+        if not sys.stdin.isatty():
+            try:
+                input_data = sys.stdin.read()
+                if input_data:
+                    data = json.loads(input_data)
+                    operation = data.get('operation')
+                    sequence = data.get('sequence')
+                    enzyme_selection = data.get('enzyme_selection')
+                    options = data.get('options', {})
+            except json.JSONDecodeError:
+                pass  # Fall through to argv parsing
+            except Exception:
+                pass  # Fall through to argv parsing
         
-        if operation == 'load':
-            # Load and analyze sequence
+        # If no stdin data, try command line arguments
+        if not operation or not sequence:
+            if len(sys.argv) < 2:
+                print(json.dumps({
+                    'success': False,
+                    'error': 'No operation specified'
+                }))
+                return
+            
+            operation = sys.argv[1]
+            
             if len(sys.argv) < 3:
                 print(json.dumps({
                     'success': False,
@@ -602,18 +623,29 @@ def main():
                 }))
                 return
             
-            sequence_input = sys.argv[2]
+            sequence = sys.argv[2]
             
+            if len(sys.argv) > 3:
+                enzyme_selection = sys.argv[3]
+            
+            if len(sys.argv) > 4:
+                try:
+                    options = json.loads(sys.argv[4])
+                except:
+                    pass
+        
+        if operation == 'load':
+            # Load and analyze sequence
             # Check if it's a file format or raw sequence
-            if sequence_input.startswith('>'):
+            if sequence.startswith('>'):
                 # FASTA format
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
                 # GenBank format
-                sequence = parse_genbank(sequence_input)
+                sequence = parse_genbank(sequence)
             else:
                 # Raw sequence
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Analyze the sequence
             result = analyze_sequence(sequence)
@@ -621,37 +653,31 @@ def main():
             
         elif operation == 'analyze':
             # Analyze and clean restriction sites
-            if len(sys.argv) < 4:
+            if not enzyme_selection:
                 print(json.dumps({
                     'success': False,
-                    'error': 'Insufficient arguments for analysis'
+                    'error': 'Enzyme selection required for analyze operation'
                 }))
                 return
             
-            sequence_input = sys.argv[2]
-            enzyme_selection = sys.argv[3]
-            
             # Parse options if provided
-            options = {
+            parsed_options = {
                 'preserve_orfs': True,
                 'silent_mutations': True,
                 'optimize_codons': False,
                 'preserve_regulatory': True
             }
             
-            if len(sys.argv) > 4:
-                try:
-                    options.update(json.loads(sys.argv[4]))
-                except:
-                    pass  # Use defaults if parsing fails
+            if options:
+                parsed_options.update(options)
             
             # Parse sequence
-            if sequence_input.startswith('>'):
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
-                sequence = parse_genbank(sequence_input)
+            if sequence.startswith('>'):
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
+                sequence = parse_genbank(sequence)
             else:
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Validate sequence
             is_valid, result = validate_dna_sequence(sequence)
@@ -674,7 +700,7 @@ def main():
                 return
             
             # Clean restriction sites
-            cleaning_result = clean_restriction_sites(clean_sequence, enzymes, options)
+            cleaning_result = clean_restriction_sites(clean_sequence, enzymes, parsed_options)
             
             # Analyze cleaned sequence
             cleaned_analysis = analyze_sequence(cleaning_result['cleaned_sequence'])
@@ -690,7 +716,7 @@ def main():
                     'statistics': cleaning_result['statistics'],
                     'sequence_analysis': cleaned_analysis['data'],
                     'enzymes_processed': enzymes,
-                    'options_used': options
+                    'options_used': parsed_options
                 }
                 
                 print(json.dumps(final_result))
@@ -702,27 +728,13 @@ def main():
             
         elif operation == 'scan':
             # Comprehensive restriction site analysis (no cleaning)
-            if len(sys.argv) < 3:
-                print(json.dumps({
-                    'success': False,
-                    'error': 'No sequence provided for scanning'
-                }))
-                return
-            
-            sequence_input = sys.argv[2]
-            
-            # Optional enzyme selection for targeted scanning
-            enzyme_selection = None
-            if len(sys.argv) > 3:
-                enzyme_selection = sys.argv[3]
-            
             # Parse sequence
-            if sequence_input.startswith('>'):
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
-                sequence = parse_genbank(sequence_input)
+            if sequence.startswith('>'):
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
+                sequence = parse_genbank(sequence)
             else:
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Validate sequence
             is_valid, result = validate_dna_sequence(sequence)

@@ -439,37 +439,74 @@ def analyze_coding_impact(reference_seq, sample_seq):
 
 def main():
     try:
-        if len(sys.argv) < 2:
-            print(json.dumps({
-                'success': False,
-                'error': 'No operation specified'
-            }))
-            return
+        # First, try to read from stdin if available
+        operation = None
+        sequence = None
+        seq_type = 'unknown'
+        reference_seq = None
+        sample_seq = None
         
-        operation = sys.argv[1]
+        # Check if we have stdin data
+        if not sys.stdin.isatty():
+            try:
+                input_data = sys.stdin.read()
+                if input_data:
+                    data = json.loads(input_data)
+                    operation = data.get('operation')
+                    sequence = data.get('sequence')
+                    seq_type = data.get('type', 'unknown')
+                    reference_seq = data.get('reference_seq')
+                    sample_seq = data.get('sample_seq')
+            except json.JSONDecodeError:
+                pass  # Fall through to argv parsing
+            except Exception:
+                pass  # Fall through to argv parsing
         
-        if operation == 'load':
-            # Load and analyze sequence
-            if len(sys.argv) < 3:
+        # If no stdin data, try command line arguments
+        if not operation:
+            if len(sys.argv) < 2:
                 print(json.dumps({
                     'success': False,
-                    'error': 'No sequence provided'
+                    'error': 'No operation specified'
                 }))
                 return
             
-            sequence_input = sys.argv[2]
-            seq_type = sys.argv[3] if len(sys.argv) > 3 else 'unknown'
+            operation = sys.argv[1]
             
+            if operation == 'load':
+                if len(sys.argv) < 3:
+                    print(json.dumps({
+                        'success': False,
+                        'error': 'No sequence provided'
+                    }))
+                    return
+                
+                sequence = sys.argv[2]
+                seq_type = sys.argv[3] if len(sys.argv) > 3 else 'unknown'
+            
+            elif operation in ['analyze', 'stop_codons', 'coding_impact']:
+                if len(sys.argv) < 4:
+                    print(json.dumps({
+                        'success': False,
+                        'error': 'Insufficient arguments for this operation'
+                    }))
+                    return
+                
+                reference_seq = sys.argv[2]
+                sample_seq = sys.argv[3]
+        
+        if operation == 'load':
+            # Load and analyze sequence
             # Check if it's a file format or raw sequence
-            if sequence_input.startswith('>'):
+            if sequence.startswith('>'):
                 # FASTA format
-                sequence = parse_fasta(sequence_input)
-            elif 'ORIGIN' in sequence_input:
+                sequence = parse_fasta(sequence)
+            elif 'ORIGIN' in sequence:
                 # GenBank format
-                sequence = parse_genbank(sequence_input)
+                sequence = parse_genbank(sequence)
             else:
                 # Raw sequence
-                sequence = sequence_input.strip()
+                sequence = sequence.strip()
             
             # Analyze the sequence
             result = analyze_sequence(sequence, seq_type)
@@ -477,25 +514,15 @@ def main():
             
         elif operation == 'analyze':
             # Analyze SNPs between two sequences
-            if len(sys.argv) < 4:
-                print(json.dumps({
-                    'success': False,
-                    'error': 'Insufficient arguments for SNP analysis'
-                }))
-                return
-            
-            reference_seq = sys.argv[2]
-            sample_seq = sys.argv[3]
-            
             # Parse sequences if they're in file formats
-            if reference_seq.startswith('>'):
+            if reference_seq and reference_seq.startswith('>'):
                 reference_seq = parse_fasta(reference_seq)
-            elif 'ORIGIN' in reference_seq:
+            elif reference_seq and 'ORIGIN' in reference_seq:
                 reference_seq = parse_genbank(reference_seq)
             
-            if sample_seq.startswith('>'):
+            if sample_seq and sample_seq.startswith('>'):
                 sample_seq = parse_fasta(sample_seq)
-            elif 'ORIGIN' in sample_seq:
+            elif sample_seq and 'ORIGIN' in sample_seq:
                 sample_seq = parse_genbank(sample_seq)
             
             # Find SNPs
@@ -504,25 +531,15 @@ def main():
             
         elif operation == 'stop_codons':
             # Analyze stop codons in both sequences
-            if len(sys.argv) < 4:
-                print(json.dumps({
-                    'success': False,
-                    'error': 'Insufficient arguments for stop codon analysis'
-                }))
-                return
-            
-            reference_seq = sys.argv[2]
-            sample_seq = sys.argv[3]
-            
             # Parse sequences if they're in file formats
-            if reference_seq.startswith('>'):
+            if reference_seq and reference_seq.startswith('>'):
                 reference_seq = parse_fasta(reference_seq)
-            elif 'ORIGIN' in reference_seq:
+            elif reference_seq and 'ORIGIN' in reference_seq:
                 reference_seq = parse_genbank(reference_seq)
             
-            if sample_seq.startswith('>'):
+            if sample_seq and sample_seq.startswith('>'):
                 sample_seq = parse_fasta(sample_seq)
-            elif 'ORIGIN' in sample_seq:
+            elif sample_seq and 'ORIGIN' in sample_seq:
                 sample_seq = parse_genbank(sample_seq)
             
             # Analyze stop codons
@@ -531,25 +548,15 @@ def main():
             
         elif operation == 'coding_impact':
             # Analyze coding impact (synonymous/non-synonymous)
-            if len(sys.argv) < 4:
-                print(json.dumps({
-                    'success': False,
-                    'error': 'Insufficient arguments for coding impact analysis'
-                }))
-                return
-            
-            reference_seq = sys.argv[2]
-            sample_seq = sys.argv[3]
-            
             # Parse sequences if they're in file formats
-            if reference_seq.startswith('>'):
+            if reference_seq and reference_seq.startswith('>'):
                 reference_seq = parse_fasta(reference_seq)
-            elif 'ORIGIN' in reference_seq:
+            elif reference_seq and 'ORIGIN' in reference_seq:
                 reference_seq = parse_genbank(reference_seq)
             
-            if sample_seq.startswith('>'):
+            if sample_seq and sample_seq.startswith('>'):
                 sample_seq = parse_fasta(sample_seq)
-            elif 'ORIGIN' in sample_seq:
+            elif sample_seq and 'ORIGIN' in sample_seq:
                 sample_seq = parse_genbank(sample_seq)
             
             # Analyze coding impact

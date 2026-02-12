@@ -136,30 +136,69 @@ class DNATranslatorDirect:
 def main():
     """Main function for command-line execution"""
     parser = argparse.ArgumentParser(description='DNA Translator')
-    parser.add_argument('--sequence', required=True, help='DNA sequence to translate')
+    parser.add_argument('--sequence', help='DNA sequence to translate')
     parser.add_argument('--reading-frame', default='+1', help='Reading frame (+1, +2, +3, -1, -2, -3)')
-    parser.add_argument('--output-types', required=True, help='Comma-separated output types (mrna,trna,protein)')
+    parser.add_argument('--output-types', help='Comma-separated output types (mrna,trna,protein)')
     parser.add_argument('--file-content', help='File content for file-based translation')
     parser.add_argument('--file-format', default='txt', help='File format (fasta, genbank, txt)')
     
     args = parser.parse_args()
     
+    # Get inputs from arguments or stdin
+    sequence = args.sequence
+    reading_frame = args.reading_frame
+    output_types_arg = args.output_types
+    file_content = args.file_content
+    file_format = args.file_format
+    
+    # If no sequence from args, try stdin
+    if not sequence or not output_types_arg:
+        try:
+            input_data = sys.stdin.read()
+            if input_data:
+                data = json.loads(input_data)
+                sequence = sequence or data.get('sequence', '')
+                reading_frame = data.get('reading_frame', reading_frame)
+                output_types_arg = output_types_arg or data.get('output_types', '')
+                file_content = file_content or data.get('file_content')
+                file_format = data.get('file_format', file_format)
+        except json.JSONDecodeError:
+            error_output = {
+                'success': False,
+                'error': 'Failed to parse JSON from stdin'
+            }
+            print(json.dumps(error_output))
+            sys.exit(1)
+        except Exception as e:
+            error_output = {
+                'success': False,
+                'error': f'Error reading from stdin: {str(e)}'
+            }
+            print(json.dumps(error_output))
+            sys.exit(1)
+    
+    if not sequence or not output_types_arg:
+        error_output = {
+            'success': False,
+            'error': 'Sequence and output types are required'
+        }
+        print(json.dumps(error_output))
+        sys.exit(1)
+    
     translator = DNATranslatorDirect()
     
     try:
         # Parse output types
-        output_types = [t.strip() for t in args.output_types.split(',')]
+        output_types = [t.strip() for t in output_types_arg.split(',')]
         
         # Handle file content if provided
-        if args.file_content:
-            sequences = translator.parse_file_content(args.file_content, args.file_format)
+        if file_content:
+            sequences = translator.parse_file_content(file_content, file_format)
             if not sequences:
                 raise ValueError("No valid sequences found in file")
             
             # Use first sequence
             sequence = sequences[0]['sequence']
-        else:
-            sequence = args.sequence
         
         # Validate DNA sequence
         is_valid, clean_sequence = translator.validate_dna_sequence(sequence)
@@ -167,14 +206,14 @@ def main():
             raise ValueError("Invalid DNA sequence. Only A, T, G, C, N nucleotides are allowed.")
         
         # Perform translation
-        results = translator.translate_sequence(clean_sequence, args.reading_frame, output_types)
+        results = translator.translate_sequence(clean_sequence, reading_frame, output_types)
         
         # Add sequence info
         seq_obj = Seq(clean_sequence)
         sequence_info = {
             'length': len(clean_sequence),
             'gc_content': round(gc_fraction(seq_obj) * 100, 2),
-            'reading_frame': args.reading_frame
+            'reading_frame': reading_frame
         }
         
         # Output JSON result

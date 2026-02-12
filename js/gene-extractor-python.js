@@ -174,6 +174,9 @@ class PythonGeneExtractor {
                 if (!proceed) {
                     return;
                 }
+                // If user continued WITHOUT uploading GFF, show error
+                this.showNotification('⚠️ GFF file is required for gene extraction. Please upload a GFF/GFF3 file to proceed.', 'error');
+                return;
             }
 
             // Show loading state
@@ -183,13 +186,38 @@ class PythonGeneExtractor {
             let fastaContent = null;
             let gffContent = null;
 
-            if (this.fastaFile) {
-                fastaContent = await this.readFileContent(this.fastaFile);
+            try {
+                if (this.fastaFile) {
+                    console.log('Reading FASTA file...');
+                    fastaContent = await this.readFileContent(this.fastaFile);
+                    console.log('FASTA file read successfully');
+                }
+            } catch (fastaError) {
+                throw new Error(`Failed to read FASTA file: ${fastaError.message}`);
             }
 
-            if (this.gffFile) {
-                gffContent = await this.readFileContent(this.gffFile);
+            try {
+                if (this.gffFile) {
+                    console.log('Reading GFF file...');
+                    gffContent = await this.readFileContent(this.gffFile);
+                    console.log('GFF file read successfully');
+                }
+            } catch (gffError) {
+                throw new Error(`Failed to read GFF file: ${gffError.message}`);
             }
+
+            // Verify both contents were actually read
+            if (!fastaContent && !manualSequence) {
+                throw new Error('No sequence data available. Please check your FASTA file or enter a sequence manually.');
+            }
+            
+            if (!gffContent) {
+                throw new Error('GFF file content is empty or unreadable. Please verify the file is valid and try again.');
+            }
+
+            // Log file sizes for debugging
+            console.log(`Sequence data size: ${fastaContent ? (fastaContent.length / 1024 / 1024).toFixed(2) + 'MB' : 'manual input'}`);
+            console.log(`GFF data size: ${(gffContent.length / 1024 / 1024).toFixed(2)}MB`);
 
             // Call Python script - TRY LOADING ALL GENES AT ONCE!
             const result = await this.callPythonScript(
@@ -288,7 +316,7 @@ class PythonGeneExtractor {
                 const path = require('path');
 
                 // Prepare arguments for Python script
-                const scriptPath = path.join(__dirname, 'assets', 'gene-extractor.py');
+                const scriptPath = path.join(__dirname, '..', 'assets', 'gene-extractor.py');
                 const args = [scriptPath];
 
                 // Add sequence data (handle temp files)
@@ -933,45 +961,44 @@ class PythonGeneExtractor {
             modal.innerHTML = `
                 <div class="flex items-center gap-3 mb-4">
                     <img src="emojis/warning.svg" class="w-8 h-8">
-                    <h3 class="text-xl font-bold text-yellow-400">Missing GFF/GFF3 Annotation File</h3>
+                    <h3 class="text-xl font-bold text-red-400">❌ GFF/GFF3 File REQUIRED</h3>
                 </div>
                 <div class="space-y-4 mb-6">
-                    <p class="text-gray-300">
-                        🧬 <strong>For REAL gene extraction</strong>, you need a GFF/GFF3 annotation file! Without annotations, the system will fall back to ORF detection which finds <em>potential</em> genes, not actual annotated genes.
-                    </p>
-                    <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <h4 class="text-red-400 font-medium mb-2">🚨 REAL vs PREDICTED Genes:</h4>
-                        <div class="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                                <h5 class="text-green-400 font-medium">✅ WITH GFF (Real Genes):</h5>
-                                <ul class="text-gray-300 space-y-1">
-                                    <li>• Actual annotated genes</li>
-                                    <li>• Precise gene boundaries</li>
-                                    <li>• Gene names & functions</li>
-                                    <li>• Strand information</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h5 class="text-yellow-400 font-medium">⚠️ WITHOUT GFF (ORF Detection):</h5>
-                                <ul class="text-gray-300 space-y-1">
-                                    <li>• Potential genes only</li>
-                                    <li>• May include false positives</li>
-                                    <li>• No functional annotation</li>
-                                    <li>• Less accurate boundaries</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="bg-red-500/20 border-2 border-red-500 rounded-lg p-4">
+                        <p class="text-red-300 font-bold text-lg mb-2">🚨 GFF annotation file is REQUIRED for gene extraction!</p>
+                        <p class="text-red-200">
+                            The fast gene extractor requires a <strong>GFF or GFF3 annotation file</strong> to work. Without it, genes cannot be extracted from the genome.
+                        </p>
                     </div>
+                    
+                    <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                        <h4 class="text-blue-300 font-medium mb-2">📋 What You Need:</h4>
+                        <ul class="text-blue-200 text-sm space-y-2">
+                            <li>✅ Genome FASTA file (you have this)</li>
+                            <li>❌ GFF/GFF3 annotation file <strong>(MISSING - REQUIRED)</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                        <h4 class="text-green-300 font-medium mb-2">💡 What is a GFF file?</h4>
+                        <p class="text-green-200 text-sm mb-2">
+                            A GFF (General Feature Format) file contains the <strong>annotations</strong> for your genome - it tells us WHERE the genes are and what they do.
+                        </p>
+                        <ul class="text-green-200 text-sm space-y-1">
+                            <li>• Contains gene locations and coordinates</li>
+                            <li>• Includes gene IDs, names, and functions</li>
+                            <li>• Standard file from genome sequencing projects</li>
+                            <li>• Usually named something like: genome.gff, genome.gff3, annotations.gff</li>
+                        </ul>
+                    </div>
+                    
                     <p class="text-gray-400 text-sm">
-                        💡 <strong>Tip:</strong> For your AnthuriumAmnicola genome, use the corresponding .gff file for real gene extraction!
+                        💡 <strong>Tip:</strong> For your AnthuriumAmnicola genome, look for the corresponding .gff or .gff3 file from the same source as your FASTA file!
                     </p>
                 </div>
                 <div class="flex gap-3 justify-end">
-                    <button id="gff-warning-cancel" class="px-4 py-2 bg-slate-600/20 border border-slate-500/30 rounded-lg text-slate-300 hover:bg-slate-600/30 transition-all">
-                        Cancel & Upload GFF
-                    </button>
-                    <button id="gff-warning-continue" class="px-4 py-2 bg-yellow-600/20 border border-yellow-500/30 rounded-lg text-yellow-300 hover:bg-yellow-600/30 transition-all">
-                        Continue Anyway
+                    <button id="gff-warning-cancel" class="px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-lg text-green-300 hover:bg-green-600/30 transition-all font-medium">
+                        ✅ Upload GFF File
                     </button>
                 </div>
             `;
@@ -981,16 +1008,10 @@ class PythonGeneExtractor {
 
             // Handle button clicks
             const cancelBtn = modal.querySelector('#gff-warning-cancel');
-            const continueBtn = modal.querySelector('#gff-warning-continue');
 
             cancelBtn.addEventListener('click', () => {
                 document.body.removeChild(overlay);
-                resolve(false);
-            });
-
-            continueBtn.addEventListener('click', () => {
-                document.body.removeChild(overlay);
-                resolve(true);
+                resolve(false);  // Always resolve to false - user MUST upload GFF file
             });
 
             // Close on overlay click
@@ -1088,26 +1109,113 @@ class PythonGeneExtractor {
 
     readFileContent(file) {
         return new Promise((resolve, reject) => {
-            // For very large files (>10GB), show error
-            if (file.size > 10 * 1024 * 1024 * 1024) { // > 10GB
-                reject(new Error(`File "${file.name}" is too large (${this.formatFileSize(file.size)}). Maximum supported size is 10GB.`));
-                return;
-            }
+            try {
+                console.log(`Reading file: ${file.name} (${this.formatFileSize(file.size)})`);
+                console.log(`File type: ${file.type || 'not specified'}`);
+                
+                // For very large files (>10GB), show error
+                if (file.size > 10 * 1024 * 1024 * 1024) { // > 10GB
+                    reject(new Error(`File "${file.name}" is too large (${this.formatFileSize(file.size)}). Maximum supported size is 10GB.`));
+                    return;
+                }
 
-            // For large files (>1GB), we need to stream to Python instead of loading into memory
-            if (file.size > 1 * 1024 * 1024 * 1024) { // > 1GB
-                this.streamLargeFileToPython(file, resolve, reject);
-            } else {
-                // For smaller files, read normally
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.onerror = (e) => {
-                    console.error('FileReader error:', e);
-                    reject(new Error(`Failed to read file: ${file.name}. File may be corrupted or inaccessible.`));
-                };
-                reader.readAsText(file);
+                // Check if this is a GFF/GFF3 file - ALWAYS stream these to avoid RAM issues
+                const isGFFFile = file.name.toLowerCase().endsWith('.gff') || 
+                                 file.name.toLowerCase().endsWith('.gff3') ||
+                                 file.name.toLowerCase().endsWith('.gff2');
+                
+                if (isGFFFile) {
+                    console.log(`GFF/GFF3 file detected - streaming to temporary location to avoid RAM overhead`);
+                    console.log(`File will be written to disk in 64MB chunks, then Python reads directly from disk`);
+                    this.streamLargeFileToPython(file, resolve, reject);
+                    return;
+                }
+
+                // For large files (>500MB), we need to stream to Python instead of loading into memory
+                // This avoids FileReader text encoding issues
+                if (file.size > 500 * 1024 * 1024) { // > 500MB
+                    console.log(`Large file detected (${this.formatFileSize(file.size)}), streaming to temporary location...`);
+                    this.streamLargeFileToPython(file, resolve, reject);
+                } else {
+                    // For smaller files (non-GFF), try text reading first
+                    console.log(`File size: ${this.formatFileSize(file.size)} - attempting text read`);
+                    this.readFileAsText(file, resolve, reject);
+                }
+            } catch (error) {
+                console.error('Error in readFileContent:', error);
+                reject(new Error(`Failed to prepare file for reading: ${error.message}`));
             }
         });
+    }
+
+    readFileAsText(file, resolve, reject) {
+        // Try to read file as text with proper error handling
+        const reader = new FileReader();
+        
+        // Set a timeout to catch hanging reads
+        const readTimeout = setTimeout(() => {
+            console.error('File read timed out after 30 seconds');
+            reject(new Error(`File read timeout: Failed to read ${file.name} within 30 seconds. File may be too large or corrupted.`));
+        }, 30000);
+        
+        reader.onload = (e) => {
+            clearTimeout(readTimeout);
+            const result = e.target.result;
+            
+            console.log(`File read complete. Result type: ${typeof result}`);
+            console.log(`Result length: ${result ? result.length : 'null'}`);
+            
+            // Validate that we actually got content
+            if (!result || result.length === 0) {
+                console.error('File read returned empty result - attempting fallback stream method');
+                console.log(`File name: ${file.name}, Size: ${this.formatFileSize(file.size)}`);
+                
+                // Fallback: Stream the file instead (works better with some encodings)
+                console.log('Falling back to streaming method for empty file...');
+                this.streamLargeFileToPython(file, resolve, reject);
+                return;
+            }
+            
+            console.log(`Successfully read ${file.name}: ${(result.length / 1024 / 1024).toFixed(2)}MB`);
+            resolve(result);
+        };
+        
+        reader.onerror = (e) => {
+            clearTimeout(readTimeout);
+            console.error('FileReader error:', reader.error);
+            console.error('Error code:', reader.error?.code);
+            console.error('Error name:', reader.error?.name);
+            
+            // Provide helpful error messages based on error code
+            let errorMsg = `Failed to read file: ${file.name}`;
+            if (reader.error?.name === 'SecurityError') {
+                errorMsg = `Security error: Cannot read file due to browser security restrictions.`;
+            } else if (reader.error?.name === 'NotReadableError') {
+                errorMsg = `File is not readable. It may be locked by another application or uses an unsupported encoding.`;
+            } else if (reader.error?.code === 20) { // ABORT_ERR
+                errorMsg = `File read was aborted.`;
+            }
+            
+            console.error(`Falling back to streaming due to read error: ${errorMsg}`);
+            // Try fallback streaming method
+            this.streamLargeFileToPython(file, resolve, reject);
+        };
+        
+        reader.onabort = (e) => {
+            clearTimeout(readTimeout);
+            console.error('File read was aborted');
+            reject(new Error(`File read was aborted for ${file.name}. Please try again.`));
+        };
+        
+        console.log(`Starting text file read for ${file.name}...`);
+        try {
+            reader.readAsText(file, 'UTF-8');
+        } catch (readError) {
+            clearTimeout(readTimeout);
+            console.error('Error calling readAsText:', readError);
+            // Last resort: try streaming
+            this.streamLargeFileToPython(file, resolve, reject);
+        }
     }
 
     async streamLargeFileToPython(file, resolve, reject) {
@@ -1115,19 +1223,35 @@ class PythonGeneExtractor {
             const fileSizeGB = (file.size / (1024 * 1024 * 1024)).toFixed(2);
             const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
             
-            // Show RAM usage warning
-            console.log(`FULL GENOME ANALYSIS MODE`);
-            console.log(`File: ${file.name}`);
-            console.log(`Size: ${fileSizeGB} GB (${fileSizeMB} MB)`);
-            console.log(`RAM USAGE WARNING: This will use ~${fileSizeGB} GB of RAM`);
-            console.log(`No chunking - analyzing entire genome for complete gene extraction`);
+            // Detect if this is a GFF file
+            const isGFFFile = file.name.toLowerCase().endsWith('.gff') || 
+                             file.name.toLowerCase().endsWith('.gff3') ||
+                             file.name.toLowerCase().endsWith('.gff2');
             
-            // Show user notification about RAM usage
-            this.showNotification(
-                `RAM Warning: This ${fileSizeGB}GB file will use ~${fileSizeGB}GB of RAM for complete genome analysis. Make sure you have enough free memory!`, 
-                'warning', 
-                8000
-            );
+            // Show appropriate info
+            if (isGFFFile) {
+                console.log(`STREAMING GFF/GFF3 FILE TO DISK`);
+                console.log(`Efficient chunked processing - NO RAM overhead`);
+                console.log(`File: ${file.name}`);
+                console.log(`Size: ${fileSizeGB} GB (${fileSizeMB} MB)`);
+                console.log(`Chunk size: 64MB`);
+                console.log(`Processing: File → 64MB chunks → Disk temp file → Python reads from disk`);
+            } else {
+                console.log(`STREAMING GENOME FILE TO DISK`);
+                console.log(`File: ${file.name}`);
+                console.log(`Size: ${fileSizeGB} GB (${fileSizeMB} MB)`);
+                console.log(`RAM USAGE WARNING: Complete genome will be loaded for analysis`);
+            }
+            
+            // Show user notification about file handling
+            let notificationMsg = '';
+            if (isGFFFile) {
+                notificationMsg = `Processing GFF file in 64MB chunks. This will NOT consume RAM for the entire file.`;
+            } else {
+                notificationMsg = `Processing ${this.formatFileSize(file.size)} genome file in chunks. Complete genome will load into RAM for analysis.`;
+            }
+            
+            this.showNotification(notificationMsg, 'info', 5000);
             
             // For large files, we'll save to a temporary file and pass the path to Python
             const fs = require('fs');
@@ -1142,18 +1266,19 @@ class PythonGeneExtractor {
             const tempFilePath = path.join(tempDir, tempFileName);
             
             console.log(`Creating temporary copy: ${tempFilePath}`);
-            console.log(`This creates an EXACT COPY of your file (no cuts/chunks)`);
-            console.log(`Python will then read the ENTIRE temp file into RAM for complete analysis`);
+            console.log(`This will stream the file in chunks (no full RAM load)`);
             
             // Stream file to disk
             await this.streamFileToDisk(file, tempFilePath);
+            
+            console.log(`Streaming complete! File ready at: ${tempFilePath}`);
             
             // Return the temp file path instead of content
             resolve(`TEMP_FILE:${tempFilePath}`);
             
         } catch (error) {
             console.error('Failed to stream large file:', error);
-            reject(new Error(`Failed to process large file: ${error.message}`));
+            reject(new Error(`Failed to process file: ${error.message}`));
         }
     }
 

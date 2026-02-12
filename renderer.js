@@ -13,7 +13,7 @@ class AfexGenesisRenderer {
     }
 
     init() {
-        console.log('🧬 AfexGenesis™ Renderer Initializing...');
+        console.log('AfexGenesis™ Renderer Initializing...');
         
         // Initialize core systems
         this.initializeEventListeners();
@@ -26,7 +26,7 @@ class AfexGenesisRenderer {
         this.setupTooltips();
         this.setupKeyboardShortcuts();
         
-        console.log('✅ AfexGenesis™ Renderer Ready');
+        console.log('AfexGenesis™ Renderer Ready');
     }
 
     // ===== EVENT LISTENERS =====
@@ -540,7 +540,7 @@ class AfexGenesisRenderer {
         const sequences = this.parseGeneticFile(content);
         this.sequenceData.set(filename, sequences);
         
-        this.showNotification('File Loaded', `📁 ${filename} loaded with ${sequences.length} sequence(s)`);
+        this.showNotification('File Loaded', `${filename} loaded with ${sequences.length} sequence(s)`);
     }
 
     parseGeneticFile(content) {

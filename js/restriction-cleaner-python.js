@@ -1030,23 +1030,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const path = require('path');
 
             // Prepare arguments for Python script
-            const scriptPath = path.join(__dirname, 'assets', 'restriction-clearner.py');
-            const args = [scriptPath, operation, sequence];
-            
-            // Add additional arguments for analyze operation
-            if (operation === 'analyze' && enzymeSelection) {
-                // Ensure enzymeSelection is a string
-                const enzymeSelectionStr = String(enzymeSelection).trim();
-                args.push(enzymeSelectionStr);
-                
-                if (options) {
-                    const optionsStr = String(options);
-                    args.push(optionsStr);
-                }
-            }
+            const scriptPath = path.join(__dirname, '..', 'assets', 'restriction-clearner.py');
+            const args = [scriptPath];
 
             console.log('Calling Restriction Cleaner Python script:', scriptPath);
-            console.log('Arguments:', args);
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -1064,6 +1051,23 @@ document.addEventListener('DOMContentLoaded', function() {
             pythonProcess.stderr.on('data', (data) => {
                 stderr += data.toString();
             });
+
+            // Send input data via stdin as JSON
+            const inputData = {
+                operation: operation,
+                sequence: sequence,
+                enzyme_selection: enzymeSelection,
+                options: options
+            };
+
+            try {
+                pythonProcess.stdin.write(JSON.stringify(inputData));
+                pythonProcess.stdin.end();
+            } catch (error) {
+                console.error('Failed to write to Python stdin:', error);
+                reject(new Error(`Failed to send data to Python: ${error.message}`));
+                return;
+            }
 
             pythonProcess.on('close', (code) => {
                 console.log(`Python process exited with code: ${code}`);

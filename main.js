@@ -2,14 +2,17 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+// Set the App User Model ID to match the appId in package.json and Inno Setup
+app.setAppUserModelId('com.afexgenesis.afexcore');
+
 function createWindow() {
     // Create the browser window with WebView enabled
     const mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 800,
+        width: 1280,
+        height: 720,
         //frame: false, // remove default OS frame
         //titleBarStyle: 'hidden', // macOS cleaner look
-        autoHideMenuBar: true, // Hide the menu bar (File, Edit, View, etc.)
+        autoHideMenuBar: false, // Hide the menu bar (File, Edit, View, etc.)
         webPreferences: {
             nodeIntegration: true, // Disable for security - use preload script instead NVM it's on back again, hey if you are seeing this code that means u are either wondering how this Software works or Editing it
             contextIsolation: false, // Enable context isolation for security NVM it's disabled again. wait u again?  well i do gotta thank you for Using our software :) soo yeah while it might contain bugs we are working on a Faster & More efficient Genetic Engineering Tool which keeping it Casual Friendly GUI. soo yeah :)
@@ -17,7 +20,7 @@ function createWindow() {
             allowRunningInsecureContent: false,
             webSecurity: true,
             //enableRemoteModule: false, // Disable remote module for security
-            //sandbox: false, // Keep false for your Python integration needs
+            //sandbox: false, // Keep false for Python integration needs
             preload: path.join(__dirname, 'preload.js'), // Add preload script for secure API exposure
             experimentalFeatures: false,
             plugins: false,
@@ -35,7 +38,7 @@ function createWindow() {
     // Show window when ready
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
-        console.log('🧬 AfexGenesis™ Laboratory System Launched');
+        console.log('AfexGenesis™ Laboratory System Launched');
     });
 
     // Open DevTools in development
@@ -45,7 +48,7 @@ function createWindow() {
 
     // Handle window closed
     mainWindow.on('closed', () => {
-        console.log('🔬 Laboratory System Closed');
+        console.log('Laboratory System Closed');
     });
 
     return mainWindow;
@@ -71,7 +74,7 @@ app.on('web-contents-created', (event, contents) => {
     // Prevent new window creation
     contents.on('new-window', (navigationEvent, navigationURL, frameName, disposition, options) => {
         navigationEvent.preventDefault();
-        console.log('🚫 New window blocked:', navigationURL);
+        console.log('New window blocked:', navigationURL);
     });
 
     // Prevent navigation to external URLs
@@ -88,13 +91,13 @@ app.on('web-contents-created', (event, contents) => {
         
         if (!navigationURL.startsWith('file://') && !isAllowed) {
             navigationEvent.preventDefault();
-            console.log('🚫 Navigation blocked:', navigationURL);
+            console.log('Navigation blocked:', navigationURL);
         }
     });
 
     // Prevent opening external links
     contents.setWindowOpenHandler(({ url }) => {
-        console.log('🚫 External link blocked:', url);
+        console.log('External link blocked:', url);
         return { action: 'deny' };
     });
 
@@ -127,7 +130,7 @@ ipcMain.handle('dialog:openFile', async () => {
             const content = fs.readFileSync(result.filePaths[0], 'utf8');
             return { success: true, content, filePath: result.filePaths[0] };
         } catch (error) {
-            console.error('🚫 File read error:', error);
+            console.error('File read error:', error);
             return { success: false, error: error.message };
         }
     }
@@ -148,7 +151,7 @@ ipcMain.handle('dialog:saveFile', async (event, content) => {
             fs.writeFileSync(result.filePath, content);
             return { success: true, filePath: result.filePath };
         } catch (error) {
-            console.error('🚫 File save error:', error);
+            console.error('File save error:', error);
             return { success: false, error: error.message };
         }
     }
@@ -160,7 +163,7 @@ ipcMain.handle('app:getVersion', () => {
 });
 
 ipcMain.handle('security:log', (event, securityEvent) => {
-    console.log('🔒 Security Event:', securityEvent);
+    console.log('Security Event:', securityEvent);
     // You could log to file or send to monitoring service here
     return true;
 });
@@ -171,22 +174,22 @@ ipcMain.handle('shell:openExternal', async (event, url) => {
         await shell.openExternal(url);
         return { success: true };
     }
-    console.log('🚫 Blocked non-HTTPS external URL:', url);
+    console.log('Blocked non-HTTPS external URL:', url);
     return { success: false, error: 'Only HTTPS URLs allowed' };
 });
 
-// Python execution handler (implement based on your needs)
+// Python execution handler (implement based on needs)
 ipcMain.handle('python:execute', async (event, script) => {
     // Implement secure Python execution here
-    // This is a placeholder - you'll need to implement based on your Python integration
-    console.log('🐍 Python execution requested:', script.substring(0, 100) + '...');
+    // This is a placeholder - you'll need to implement based on Python integration
+    console.log('Python execution requested:', script.substring(0, 100) + '...');
     return { success: true, result: 'Python execution placeholder' };
 });
 
 console.log(`
-🧬 ===============================================
-🦕     AFEXGENESIS™ ELECTRON APPLICATION
-🔬         Genetic Engineering Interface
-🧪           Starting Electron Process...
+ ===============================================
+                    AFEXGENESIS™ ELECTRON APPLICATION
+                            Genetic Engineering Interface
+                                Starting Electron Process...
 ===============================================
 `);

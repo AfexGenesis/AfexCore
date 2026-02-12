@@ -224,22 +224,10 @@ class PythonDNATranslator {
             const path = require('path');
 
             // Prepare arguments for Python script
-            const scriptPath = path.join(__dirname, 'assets', 'dna-translator-direct.py');
-            const args = [
-                scriptPath,
-                '--sequence', sequence,
-                '--reading-frame', readingFrame,
-                '--output-types', outputTypes.join(',')
-            ];
-
-            // Add file content if provided
-            if (fileContent && fileFormat) {
-                args.push('--file-content', fileContent);
-                args.push('--file-format', fileFormat);
-            }
+            const scriptPath = path.join(__dirname, '..', 'assets', 'dna-translator-direct.py');
+            const args = [scriptPath];
 
             console.log('Calling Python script:', scriptPath);
-            console.log('Full command:', 'python', args.join(' '));
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -257,6 +245,24 @@ class PythonDNATranslator {
             pythonProcess.stderr.on('data', (data) => {
                 stderr += data.toString();
             });
+
+            // Send input data via stdin as JSON
+            const inputData = {
+                sequence: sequence,
+                reading_frame: readingFrame,
+                output_types: outputTypes.join(','),
+                file_content: fileContent,
+                file_format: fileFormat
+            };
+
+            try {
+                pythonProcess.stdin.write(JSON.stringify(inputData));
+                pythonProcess.stdin.end();
+            } catch (error) {
+                console.error('Failed to write to Python stdin:', error);
+                reject(new Error(`Failed to send data to Python: ${error.message}`));
+                return;
+            }
 
             pythonProcess.on('close', (code) => {
                 console.log(`Python process exited with code: ${code}`);

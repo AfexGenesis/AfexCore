@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>AfexCore™ | Powered by AfexGenesis™</title>
+    <title>AfexCore | Powered by AfexGenesis</title>
     
     <!-- Meta tags for WebView/Electron compatibility -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -21,15 +21,18 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/genetic.css">
+    <link rel="stylesheet" href="css/index.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- jsPDF Library for PDF generation -->
+    <!-- jsPDF Library for PDF generation 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    jsPDF Library for PDF generation  -->
     
-    <!-- Chart.js Library for charts -->
+    <!-- Chart.js Library for charts 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    Chart.js Library for charts -->
 </head>
 <body class="min-h-screen body-with-sidebar">
     
@@ -73,12 +76,6 @@
 
         <!-- Genetic Lab Page Content -->
         <div id="home-page" class="page-content active">
-            <!-- Title Section -->
-            <div class="flex justify-center items-center pt-32 pb-8">
-                <div class="flex items-center gap-4">
-                    <h1 class="text-8xl font-bold text-white">Genetic Laboratory</h1>
-                </div>
-            </div>
             
             <!-- Search Bar Section - Middle of Screen -->
             <div class="flex justify-center items-center pt-48 pb-8">
@@ -199,7 +196,7 @@
                                 <img src="emojis/scissors.svg" class="w-8 h-8">
                                 <h3 class="text-xl font-semibold text-white">Chromosome Splitter</h3>
                             </div>
-                            <p class="text-gray-300 mb-4">Splits multi-chromosome FASTA files into individual chromosome files - no GFF needed!</p>
+                            <p class="text-gray-300 mb-4">Splits multi-chromosome FASTA files into individual chromosome files</p>
                             <div class="genetic-launch-btn chromosome-splitter" data-page="chromosome-splitter">
                                 Launch Tool
                             </div>
@@ -908,7 +905,7 @@
                             <!-- Analyze Button -->
                             <button id="gene-analyze-btn" class="w-full mt-6 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-lg px-6 py-3 text-white font-medium hover:from-blue-600/30 hover:to-purple-600/30 transition-all flex items-center justify-center gap-2">
                                 <img src="emojis/microscope.svg" class="w-5 h-5">
-                                Analyze & Extract Genes
+                                Analyze & Extract Genes [ GFF3 might fail use GFF instead ]
                             </button>
                         </div>
                         
@@ -3578,8 +3575,8 @@ ATGCGATCGATCGATCG..."
     </div>
 
     <!-- JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> -->
     <script src="js/script.js"></script>
     <script src="js/dna-sequencer-python.js"></script>
     <script src="js/dna-translator-python.js"></script>

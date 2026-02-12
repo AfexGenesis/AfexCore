@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple Chromosome Splitter - FASTA Only
-Just like your working script but with JSON output for the web interface
-No GFF file needed - splits every sequence in FASTA as a separate chromosome
+
 """
 
 import argparse
@@ -26,13 +24,13 @@ def parse_fasta_simple(fasta_input) -> Dict[str, str]:
     if isinstance(fasta_input, str) and os.path.exists(fasta_input):
         # File path - most memory efficient
         if BIOPYTHON_AVAILABLE:
-            print("🧬 Using BioPython file parsing", file=sys.stderr)
+            print("Using BioPython file parsing", file=sys.stderr)
             for record in SeqIO.parse(fasta_input, "fasta"):
-                # Just like your script: record.id.split()[0]
+                # Just like script: record.id.split()[0]
                 chrom_name = record.id.split()[0]
                 sequences[chrom_name] = str(record.seq)
         else:
-            print("🧬 Using manual file parsing", file=sys.stderr)
+            print("Using manual file parsing", file=sys.stderr)
             with open(fasta_input, 'r') as f:
                 current_header = None
                 current_sequence = []
@@ -47,7 +45,7 @@ def parse_fasta_simple(fasta_input) -> Dict[str, str]:
                         if current_header and current_sequence:
                             sequences[current_header] = ''.join(current_sequence)
                         
-                        # Start new sequence - just like your script
+                        # Start new sequence - just like script
                         current_header = line[1:].split()[0]  # Remove '>' and split
                         current_sequence = []
                     else:
@@ -59,14 +57,14 @@ def parse_fasta_simple(fasta_input) -> Dict[str, str]:
     else:
         # Content string
         if BIOPYTHON_AVAILABLE:
-            print("🧬 Using BioPython string parsing", file=sys.stderr)
+            print("Using BioPython string parsing", file=sys.stderr)
             from io import StringIO
             fasta_io = StringIO(fasta_input)
             for record in SeqIO.parse(fasta_io, "fasta"):
                 chrom_name = record.id.split()[0]
                 sequences[chrom_name] = str(record.seq)
         else:
-            print("🧬 Using manual string parsing", file=sys.stderr)
+            print("Using manual string parsing", file=sys.stderr)
             lines = fasta_input.strip().split('\n')
             current_header = None
             current_sequence = []
@@ -111,10 +109,10 @@ def classify_chromosome_type(chr_name: str) -> str:
         return 'chromosome'
 
 def split_chromosomes_simple(fasta_input) -> Dict:
-    """Simple chromosome splitting - just like your working script!"""
+    """Simple chromosome splitting - just like the working script!"""
     
     try:
-        print("🚀 Starting simple chromosome splitting", file=sys.stderr)
+        print("Starting simple chromosome splitting", file=sys.stderr)
         
         # Parse FASTA - simple and fast
         sequences = parse_fasta_simple(fasta_input)
@@ -124,9 +122,9 @@ def split_chromosomes_simple(fasta_input) -> Dict:
                 'error': 'No sequences found in FASTA file'
             }
         
-        print(f"✅ Found {len(sequences)} sequences", file=sys.stderr)
+        print(f"Found {len(sequences)} sequences", file=sys.stderr)
         
-        # Process each sequence as a chromosome (just like your script!)
+        # Process each sequence as a chromosome (just like script!)
         chromosome_list = []
         chromosome_files = {}
         
@@ -138,7 +136,7 @@ def split_chromosomes_simple(fasta_input) -> Dict:
             clean_name = re.sub(r'[^\w\-_.]', '_', chr_name)
             filename = f"{clean_name}.fa"
             
-            # Create FASTA content (just like your script!)
+            # Create FASTA content (just like script!)
             fasta_content = f">{chr_name}\n"
             # Add line breaks every 80 characters
             for i in range(0, len(sequence), 80):
@@ -201,10 +199,10 @@ def main():
     fasta_input = None
     if args.fasta_file and os.path.exists(args.fasta_file):
         fasta_input = args.fasta_file
-        print(f"📁 Using FASTA file: {args.fasta_file}", file=sys.stderr)
+        print(f"Using FASTA file: {args.fasta_file}", file=sys.stderr)
     elif args.fasta_content:
         fasta_input = args.fasta_content
-        print("📝 Using FASTA content string", file=sys.stderr)
+        print("Using FASTA content string", file=sys.stderr)
     elif args.fasta_file:
         print(json.dumps({
             'success': False,
@@ -230,7 +228,7 @@ def main():
                 filepath = os.path.join(args.output_dir, filename)
                 with open(filepath, 'w') as f:
                     f.write(content)
-                print(f"💾 Saved: {filepath}", file=sys.stderr)
+                print(f"Saved: {filepath}", file=sys.stderr)
                 
         except Exception as e:
             result['error'] = f'Failed to save files: {str(e)}'

@@ -324,7 +324,7 @@ class DNASequencerPython {
             const path = require('path');
 
             // Prepare arguments for Python script (without large content)
-            const scriptPath = path.join(__dirname, 'assets', 'dna-sequencer.py');
+            const scriptPath = path.join(__dirname, '..', 'assets', 'dna-sequencer.py');
             const args = [scriptPath];
 
             // Prepare input data as JSON to send via stdin

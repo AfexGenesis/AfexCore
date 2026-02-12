@@ -115,7 +115,7 @@ class BaseCounter:
 
 def main():
     parser = argparse.ArgumentParser(description='Base Counter - Analyze DNA sequence composition')
-    parser.add_argument('--sequence', required=True, help='DNA sequence to analyze')
+    parser.add_argument('--sequence', help='DNA sequence to analyze')
     parser.add_argument('--file-content', help='File content for parsing')
     parser.add_argument('--file-format', help='File format (fasta or txt)')
     
@@ -123,8 +123,28 @@ def main():
     
     counter = BaseCounter()
     
-    # Handle file input
+    # Handle input from stdin if no sequence argument provided
     sequence = args.sequence
+    if not sequence:
+        try:
+            input_data = sys.stdin.read()
+            if input_data:
+                data = json.loads(input_data)
+                sequence = data.get('sequence', '')
+        except json.JSONDecodeError:
+            print(json.dumps({
+                'success': False,
+                'error': 'Failed to parse JSON from stdin'
+            }))
+            return
+        except Exception as e:
+            print(json.dumps({
+                'success': False,
+                'error': f'Error reading from stdin: {str(e)}'
+            }))
+            return
+    
+    # Handle file input
     if args.file_content and args.file_format:
         try:
             if args.file_format.lower() == 'fasta':

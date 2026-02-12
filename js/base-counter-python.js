@@ -213,14 +213,10 @@ class BaseCounterPython {
             const path = require('path');
 
             // Prepare arguments for Python script
-            const scriptPath = path.join(__dirname, 'assets', 'chromosome-splitter.py');
-            const args = [
-                scriptPath,
-                '--sequence', sequence
-            ];
+            const scriptPath = path.join(__dirname, '..', 'assets', 'base-counter.py');
+            const args = [scriptPath];
 
             console.log('Calling Base Counter:', scriptPath);
-            console.log('Full command:', 'python', args.join(' '));
 
             // Spawn Python process
             const pythonProcess = spawn('python', args, {
@@ -238,6 +234,20 @@ class BaseCounterPython {
             pythonProcess.stderr.on('data', (data) => {
                 stderr += data.toString();
             });
+
+            // Send input data via stdin as JSON
+            const inputData = {
+                sequence: sequence
+            };
+
+            try {
+                pythonProcess.stdin.write(JSON.stringify(inputData));
+                pythonProcess.stdin.end();
+            } catch (error) {
+                console.error('Failed to write to Python stdin:', error);
+                reject(new Error(`Failed to send data to Python: ${error.message}`));
+                return;
+            }
 
             pythonProcess.on('close', (code) => {
                 console.log(`Python process exited with code: ${code}`);

@@ -1,7 +1,7 @@
 {
   "name": "afexgenesis-laboratory",
-  "version": "2.1.4",
-  "description": "AfexGenesis™ Genetic Laboratory Software",
+  "version": "2.1.5",
+  "description": "AfexGenesis Genetic Laboratory Software",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -17,18 +17,19 @@
     "biology",
     "dna"
   ],
-  "author": "AfexGenesis™ Laboratory",
-  "license": "MIT",
+  "author": "Nirmal Weerapperuma",
+  "license": "CC-BY-NC-4.0",
   "devDependencies": {
     "electron": "^38.1.2",
-    "electron-builder": "^24.0.0"
+    "electron-builder": "^26.7.0"
   },
   "dependencies": {
     "tailwindcss": "^4.1.13"
   },
   "build": {
     "appId": "com.afexgenesis.afexcore",
-    "productName": "AfexCore™",
+    "productName": "AfexCore",
+    "icon": "assets/t-rex.ico", 
     "directories": {
       "output": "dist"
     },
@@ -39,12 +40,20 @@
       "js/**/*",
       "assets/**/*",
       "emojis/**/*",
+      "build/**/*",
       "reload.js",
       "renderer.js"
     ],
+  "extraResources": [
+    {
+      "from": "assets",
+      "to": "assets",
+      "filter": ["**/*"]
+    }
+  ],
     "win": {
-    "target": "dir",
-    "icon": "assets/icon.ico"
+      "target": "dir",
+      "icon": "assets/t-rex.ico"
     },
     "mac": {
       "category": "public.app-category.education",

@@ -255,15 +255,47 @@ class CodonFinder:
 
 def main():
     parser = argparse.ArgumentParser(description='Visual Codon Finder - Find and highlight amino acid codons')
-    parser.add_argument('--sequence', required=True, help='DNA sequence to analyze')
-    parser.add_argument('--amino-acid', required=True, help='Target amino acid (single letter code)')
+    parser.add_argument('--sequence', help='DNA sequence to analyze')
+    parser.add_argument('--amino-acid', help='Target amino acid (single letter code)')
     
     args = parser.parse_args()
+    
+    # Get sequence and amino acid from arguments or stdin
+    sequence = args.sequence
+    amino_acid = args.amino_acid
+    
+    # If no sequence from args, try stdin
+    if not sequence or not amino_acid:
+        try:
+            input_data = sys.stdin.read()
+            if input_data:
+                data = json.loads(input_data)
+                sequence = sequence or data.get('sequence', '')
+                amino_acid = amino_acid or data.get('amino_acid', '')
+        except json.JSONDecodeError:
+            print(json.dumps({
+                'success': False,
+                'error': 'Failed to parse JSON from stdin'
+            }))
+            return
+        except Exception as e:
+            print(json.dumps({
+                'success': False,
+                'error': f'Error reading from stdin: {str(e)}'
+            }))
+            return
+    
+    if not sequence or not amino_acid:
+        print(json.dumps({
+            'success': False,
+            'error': 'Sequence and amino acid are required'
+        }))
+        return
     
     finder = CodonFinder()
     
     # Find codons
-    result = finder.find_codons(args.sequence, args.amino_acid.upper())
+    result = finder.find_codons(sequence.upper(), amino_acid.upper())
     
     print(json.dumps(result, ensure_ascii=False))
 

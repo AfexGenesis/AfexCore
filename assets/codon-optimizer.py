@@ -527,7 +527,7 @@ class CodonOptimizer:
 
 def main():
     parser = argparse.ArgumentParser(description='Codon Optimizer - Optimize DNA sequences for expression')
-    parser.add_argument('--sequence', required=True, help='DNA sequence to optimize')
+    parser.add_argument('--sequence', help='DNA sequence to optimize')
     parser.add_argument('--gc-target', help='GC content target (e.g., "45-55" or "custom")')
     parser.add_argument('--custom-gc', type=float, help='Custom GC target percentage (20-80)')
     parser.add_argument('--organism', help='Target organism for codon optimization')
@@ -539,20 +539,58 @@ def main():
     
     args = parser.parse_args()
     
+    # Get inputs from arguments or stdin
+    sequence = args.sequence
+    gc_target = args.gc_target
+    custom_gc = args.custom_gc
+    organism = args.organism
+    avoid_rare_codons = args.avoid_rare_codons
+    remove_restriction_sites = args.remove_restriction_sites
+    optimize_folding = args.optimize_folding
+    file_content = args.file_content
+    file_format = args.file_format
+    
+    # If no sequence from args, try stdin
+    if not sequence:
+        try:
+            input_data = sys.stdin.read()
+            if input_data:
+                data = json.loads(input_data)
+                sequence = data.get('sequence', '')
+                gc_target = data.get('gc_target', gc_target)
+                custom_gc = data.get('custom_gc', custom_gc)
+                organism = data.get('organism', organism)
+                avoid_rare_codons = data.get('avoid_rare_codons', avoid_rare_codons)
+                remove_restriction_sites = data.get('remove_restriction_sites', remove_restriction_sites)
+                optimize_folding = data.get('optimize_folding', optimize_folding)
+                file_content = data.get('file_content', file_content)
+                file_format = data.get('file_format', file_format)
+        except json.JSONDecodeError:
+            print(json.dumps({
+                'success': False,
+                'error': 'Failed to parse JSON from stdin'
+            }))
+            return
+        except Exception as e:
+            print(json.dumps({
+                'success': False,
+                'error': f'Error reading from stdin: {str(e)}'
+            }))
+            return
+    
     optimizer = CodonOptimizer()
     
     # Handle file input
-    sequence = args.sequence
-    if args.file_content and args.file_format:
+    if file_content and file_format:
         try:
-            if args.file_format.lower() == 'fasta':
+            if file_format.lower() == 'fasta':
                 # Parse FASTA format
-                lines = args.file_content.strip().split('\n')
+                lines = file_content.strip().split('\n')
                 sequence_lines = [line for line in lines if not line.startswith('>')]
                 sequence = ''.join(sequence_lines)
             else:
                 # Plain text
-                sequence = args.file_content.strip()
+                sequence = file_content.strip()
         except Exception as e:
             print(json.dumps({
                 'success': False,
@@ -561,18 +599,17 @@ def main():
             return
     
     # Handle custom GC target
-    gc_target = args.gc_target
-    if gc_target == 'custom' and args.custom_gc:
-        gc_target = f"{args.custom_gc}-{args.custom_gc}"
+    if gc_target == 'custom' and custom_gc:
+        gc_target = f"{custom_gc}-{custom_gc}"
     
     # Optimize sequence
     result = optimizer.optimize_sequence(
         sequence=sequence,
         gc_target=gc_target,
-        organism=args.organism,
-        avoid_rare_codons=args.avoid_rare_codons,
-        remove_restriction=args.remove_restriction_sites,
-        optimize_folding=args.optimize_folding
+        organism=organism,
+        avoid_rare_codons=avoid_rare_codons,
+        remove_restriction=remove_restriction_sites,
+        optimize_folding=optimize_folding
     )
     
     print(json.dumps(result))
